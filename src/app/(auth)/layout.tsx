@@ -2,7 +2,7 @@ const AuthLayout = ({ children }: {
     children: React.ReactNode
 }) => {
     return (
-        <div className="flex flex-4 gap-y-4">
+        <div className="h-full flex items-center justify-center">
             {children}
         </div>
     )
