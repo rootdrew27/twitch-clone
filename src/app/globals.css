@@ -7,6 +7,16 @@ html,
 body,
 :root{
   height: 100%;
+  /* background: #DCECF9; */
+}
+
+.hidden-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.hidden-scrollbar::-webkit-scrollbar {
+  display: none;
 }
 
 @theme inline {
