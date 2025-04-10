@@ -28,3 +28,15 @@
 
 ## Database
 
+## Debugging
+- Debug with Chrome
+    1. Run the script from package.json: "dev": "next dev",
+    2. Enter "localhost:3000" in the browser.
+    3. Inspect the page (F12)
+    4. Navigate to Sources
+    5. Then select Workspace
+        6. Add a folder (your src/) if not present.
+    7. Add breakpoints, and you should be good.
+
+- Debug with VSCODE:
+    - Still working on this one...
