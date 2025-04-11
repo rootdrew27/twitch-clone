@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Image from "next/image";
 import { Poppins } from "next/font/google";
 
@@ -9,13 +10,14 @@ const font = Poppins({
 });
 
 export const Logo = () => {
-    return <div className="flex flex-col items-center gap-y-4">
-        <div className="bg-white rounded-full">
-            <Image src="/sample.svg" height="80" width="80" alt="Logo"/>
-        </div>
-        <div className={cn("flex flex-col items-center", font.className)}>
-            <p className="text-xl font-semibold pb-2">Disco</p>
-        </div>
-    </div>
+    return (
+        <Link href="/">
+            <div className="hidden lg:flex items-center gap-x-4 hover:opacity-75 transition">
+                <div className="bg-white rounded-full p-1">
+                    <Image src="./sample.svg" alt="twitch-clone" height="32" width="32"/>
+                </div> 
+            </div>
+        </Link>
+    )
 }
 
