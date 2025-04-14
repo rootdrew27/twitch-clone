@@ -1,12 +1,13 @@
 import { RowDataPacket } from 'mysql2';
 
-export interface User extends RowDataPacket {
+export interface UserResult extends RowDataPacket {
     id: string;
     username: string;
-    imageUrl: string;
-    externalUserId: string
+    image_url: string;
+    external_user_id: string
     bio?: string;
 
-    createdAt: Date;
-    updatedAt: Date;
+    created_at: Date;
+    updated_at: Date;
 } 
+

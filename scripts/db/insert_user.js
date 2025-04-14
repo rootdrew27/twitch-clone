@@ -14,10 +14,10 @@ async function insertUser() {
     try{
         const dbConn = await mysql.createConnection(connOpts);
         const [result] = await dbConn.execute("INSERT INTO tc_user (username, image_url, external_user_id, bio) VALUES (?, ?, ?, ?);", ["test_username", "", "", ""]);
-        console.log(result);
         await dbConn.end();
     } catch (err) {
         console.log(err);
+        throw err;
     }
 }
 

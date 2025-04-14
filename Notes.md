@@ -28,6 +28,15 @@
 
 ## Database
 
+## Light/Dark Mode
+
+- Visit https://mui.com/material-ui/react-switch/?srsltid=AfmBOoqu1mqjqUwcy-JebWijIPAR6dh2cvMsBYiqOKbYaVHRcavzaN22#customization
+
+## Testing
+
+- Visit https://playwright.dev/docs/intro
+- Visit https://nextjs.org/docs/app/building-your-application/testing/playwright
+
 ## Debugging
 - Debug with Chrome
     1. Run the script from package.json: "dev": "next dev",

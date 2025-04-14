@@ -8,4 +8,8 @@ const connOpts: ConnectionOptions = {
     password: process.env.MYSQL_PASSWORD!
 }
 
-export { connOpts };
+const makeConn = async () => {
+    return await mysql.createConnection(connOpts);
+}
+
+export { connOpts, makeConn };

@@ -16,7 +16,7 @@ async function main() {
     // create User table (TC_ is added because 'user' is a reserved mysql keyword)
     const create_user_sql = 
     `CREATE TABLE IF NOT EXISTS TC_User (
-	    id int AUTO_INCREMENT,
+	    id INT AUTO_INCREMENT,
         username VARCHAR(32) NOT NULL UNIQUE,
         image_url VARCHAR(500),
         external_user_id VARCHAR(32),
@@ -24,9 +24,24 @@ async function main() {
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
         updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
         PRIMARY KEY (id)
-    )`
+    );`
     const res = await db.execute(create_user_sql);
-    console.log(res);
+    const create_follow_sql = 
+    `CREATE TABLE IF NOT EXISTS follow (
+        id INT AUTO_INCREMENT,
+        follower_id INT,
+        following_id INT,
+        PRIMARY KEY (id),
+        FOREIGN KEY (follower_id) 
+            REFERENCES tc_user(id)
+            ON UPDATE CASCADE
+            ON DELETE CASCADE,
+        FOREIGN KEY (following_id) 
+            REFERENCES tc_user(id)
+            ON UPDATE CASCADE
+            ON DELETE CASCADE
+    );`
+    const res2 = await db.execute(create_follow_sql);
     await db.end();
 }
 
