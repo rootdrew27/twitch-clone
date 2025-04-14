@@ -1,17 +1,16 @@
 "use client";
 
+import { use } from "react";
+
 import { useSidebar } from "@/store/use-sidebar";
 import { UserItem, UserItemSkeleton } from "./user-item";
 
 import { UserResult } from "@/models/definitions";
 
-interface RecommendedProps {
-    data: UserResult[]
-}
-
-export const Recommended = ({ data }: RecommendedProps) => {
+export const Recommended = ({ data }: {data: Promise<UserResult[]>}) => {
     const { collapsed } = useSidebar((state) => state);
-    const showLabel = !collapsed && data.length > 0;
+    const users = use(data);
+    const showLabel = !collapsed && users.length > 0;
     return (
         <div>
             {showLabel && (
@@ -22,7 +21,7 @@ export const Recommended = ({ data }: RecommendedProps) => {
                 </div>
             )}
             <ul className="space-y-2 px-2">
-                {data.map((user) => (
+                {users.map((user) => (
                     <UserItem key={user.id} username={user.username!} imageUrl={user.image_url} isLive={true}/>
                 ))}
             </ul>

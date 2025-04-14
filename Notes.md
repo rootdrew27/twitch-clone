@@ -49,3 +49,10 @@
 
 - Debug with VSCODE:
     - Still working on this one...
+
+## Tasks
+
+## Future
+
+- [ ] Migrate to NextAuth (or roll own auth)
+- [ ] Switch from zustand to Redux
