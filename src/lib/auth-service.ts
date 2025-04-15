@@ -9,7 +9,7 @@ export const getSelf = async () => {
     const self = await currentUser(); // <- Dynamic API
 
     if (!self || !self.username){
-        return null;
+        throw new Error("User not found in Clerk!");
     }
 
     const db = await mysql.createConnection(connOpts);
@@ -17,7 +17,7 @@ export const getSelf = async () => {
     await db.end();
 
     if (!user) {
-        throw new Error("Not found");
+        throw new Error("User not found in database!");
     }
 
     return user;

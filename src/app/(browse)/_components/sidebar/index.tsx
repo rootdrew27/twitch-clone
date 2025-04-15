@@ -1,12 +1,10 @@
 import { Suspense } from "react";
+import { getRecommended } from "@/lib/recommended-service";
 
 import { Recommended, RecommendedSkeleton } from "./recommended"
 import { Toggle } from "./toggle";
-
 import { Wrapper } from "./wrapper";
 
-
-import { getRecommended } from "@/lib/recommended-service";
 
 export const Sidebar = async () => {
     const recommended = getRecommended();

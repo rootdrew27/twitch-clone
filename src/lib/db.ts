@@ -8,8 +8,14 @@ const connOpts: ConnectionOptions = {
     password: process.env.MYSQL_PASSWORD!
 }
 
-const makeConn = async () => {
-    return await mysql.createConnection(connOpts);
+const makeConn = async (multipleStatements: boolean = false) => {
+    if (multipleStatements){
+        const connOptsWithMult = Object.assign({}, connOpts)
+        connOptsWithMult["multipleStatements"] = true
+        return await mysql.createConnection(connOptsWithMult)
+    } else {
+        return await mysql.createConnection(connOpts);
+    }
 }
 
 export { connOpts, makeConn };
