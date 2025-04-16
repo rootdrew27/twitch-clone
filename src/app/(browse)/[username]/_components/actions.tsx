@@ -12,15 +12,16 @@ import { onFollow, onUnfollow } from "@/actions/follow";
 interface ActionProps {
     isFollowing: boolean;
     id: string;
+    username: string;
 }
 
-export const Actions = ({ isFollowing, id}: ActionProps) => {
+export const Actions = ({ isFollowing, id, username}: ActionProps) => {
     const [isPending, startTransition] = useTransition();
 
     const handleFollow = () => {
         startTransition(() => {
             onFollow(id)
-            .then((followedUsername) => toast.success("Now following " + followedUsername + "."))
+            .then(() => toast.success("Now following " + username + "."))
             .catch(() => toast.error('Something went wrong.'))
         });
     }
@@ -28,7 +29,7 @@ export const Actions = ({ isFollowing, id}: ActionProps) => {
     const handleUnfollow = () => {
         startTransition(() => {
             onUnfollow(id)
-            .then((unfollowedUsername) => toast.success("Unfollowed " + unfollowedUsername + "."))
+            .then(() => toast.success("Unfollowed " + username + "."))
             .catch(() => toast.error("Something went wrong."))
         })
     }

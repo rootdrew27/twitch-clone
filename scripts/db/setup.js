@@ -24,7 +24,7 @@ async function main() {
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
         updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
         PRIMARY KEY (id)
-    );`
+    );`;
     const res = await db.execute(create_user_sql);
     const create_follow_sql = 
     `CREATE TABLE IF NOT EXISTS follow (
@@ -40,8 +40,24 @@ async function main() {
             REFERENCES tc_user(id)
             ON UPDATE CASCADE
             ON DELETE CASCADE
-    );`
+    );`;
     const res2 = await db.execute(create_follow_sql);
+    const create_block_sql =  
+    `CREATE TABLE IF NOT EXISTS block (
+    id INT AUTO_INCREMENT,
+    blocker_id INT,
+    blocked_id INT,
+    PRIMARY KEY (id),
+    FOREIGN KEY (blocker_id) 
+        REFERENCES tc_user(id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
+    FOREIGN KEY (blocked_id) 
+        REFERENCES tc_user(id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+    );`;
+    const res3 = await db.execute(create_block_sql);
     await db.end();
 }
 
