@@ -28,10 +28,9 @@ async function main() {
     const res = await db.execute(create_user_sql);
     const create_follow_sql = 
     `CREATE TABLE IF NOT EXISTS follow (
-        id INT AUTO_INCREMENT,
         follower_id INT,
         following_id INT,
-        PRIMARY KEY (id),
+        PRIMARY KEY (follower_id, following_id),
         FOREIGN KEY (follower_id) 
             REFERENCES tc_user(id)
             ON UPDATE CASCADE
@@ -44,10 +43,9 @@ async function main() {
     const res2 = await db.execute(create_follow_sql);
     const create_block_sql =  
     `CREATE TABLE IF NOT EXISTS block (
-    id INT AUTO_INCREMENT,
     blocker_id INT,
     blocked_id INT,
-    PRIMARY KEY (id),
+    PRIMARY KEY (blocker_id, blocked_id),
     FOREIGN KEY (blocker_id) 
         REFERENCES tc_user(id)
         ON UPDATE CASCADE

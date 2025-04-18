@@ -2,7 +2,7 @@ import { makeConn } from "@/lib/db";
 import { getSelf } from "@/lib/auth-service";
 import { UserResult } from "@/models/definitions";
 
-export const isBlockedUser = async (id: string) => {
+export const isBlockingUser = async (id: string) => {
   const self = await getSelf();
 
   if (!self) {
@@ -37,7 +37,7 @@ export const blockUser = async (id: string) => {
 
     const res = await db.execute("INSERT INTO block (blocker_id, blocked_id) VALUES (?, ?);", [self.id, id]);
 
-    return 
+    return true
 } 
 
 export const unblockUser = async (id: string) => {

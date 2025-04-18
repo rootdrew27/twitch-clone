@@ -33,6 +33,6 @@ export const getRecommended = async () => {
       resolve("");
     }, 1000)
   );
-  console.log(users);
+
   return users;
 };
