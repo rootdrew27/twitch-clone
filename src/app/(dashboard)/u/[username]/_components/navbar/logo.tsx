@@ -19,7 +19,7 @@ export const Logo = () => {
                     {/* <h2 className="font-bold text-lg">DISCO</h2> */}
             </Link>
             <div>
-                <p className="text-sm pt-1 font-light text-muted-foreground">Demo</p>
+                <p className="text-sm pt-1 font-light text-muted-foreground">Creator Dashboard</p>
             </div>
         </div>
 

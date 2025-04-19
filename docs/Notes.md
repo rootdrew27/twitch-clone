@@ -16,6 +16,8 @@
 
 - Placing () around a folder name removes it from the path, while still allowing layouts to be used.
 
+- Placing [] around a folder name sets it as a dynamic parameter for the route.
+
 ## Server V.S. Client Components
 - Server: Rendered on server, immediately connects to Database, disallows interactivity, good for SEO, good for initial page load time
 
