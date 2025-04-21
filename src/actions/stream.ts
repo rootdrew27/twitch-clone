@@ -1,0 +1,45 @@
+"use server";
+
+import { revalidatePath } from "next/cache";
+
+import { makeConn } from "@/lib/db";
+import { getSelf } from "@/lib/auth-service";
+
+import { StreamConfig } from "@/models/definitions";
+
+export const updateStream  = async ({field, value}: StreamConfig) => {
+
+  const db = await makeConn();
+
+  try {
+    const self = await getSelf();
+
+    if (!self || !self.id){
+      throw new Error("User not found in Database");
+    }
+
+
+    const values = [value, self.id]
+
+    if (field === "is_chat_enabled") {
+      const [results, fields] = await db.execute("UPDATE stream SET is_chat_enabled = ? WHERE user_id = ?;", values);
+    } else if (field === "is_chat_delayed") {
+      const [results, fields] = await db.execute("UPDATE stream SET is_chat_delayed = ? WHERE user_id = ?;", values);
+    } else if (field === "is_chat_followers_only") {
+      const [results, fields] = await db.execute("UPDATE stream SET is_chat_followers_only = ? WHERE user_id = ?;", values);
+    } else {
+      throw new Error("Internal Error: The field parameter does not match a valid case.");
+    }
+
+    revalidatePath(`/u/${self.username}/chat`);
+    revalidatePath(`/${self.username}`); // revalidate so that every one watching the stream can must get updated data 
+
+    return;
+
+  } catch (err) {
+    console.log(err);
+    throw new Error("Internal Error!")
+  } finally {
+    db.end();
+  }
+}
