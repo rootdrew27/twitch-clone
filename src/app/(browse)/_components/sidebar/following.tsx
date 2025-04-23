@@ -6,9 +6,9 @@ import { useSidebar } from "@/store/use-sidebar";
 
 import { UserItem, UserItemSkeleton } from "./user-item";
 
-import { UserResult } from "@/models/definitions";
+import { FollowingResult } from "@/models/definitions";
 
-export const Following = ({ data }: {data: Promise<UserResult[]>}) => {
+export const Following = ({ data }: {data: Promise<FollowingResult[]>}) => {
     const { collapsed } = useSidebar((state) => state);
 
     const users = use(data);
@@ -28,7 +28,7 @@ export const Following = ({ data }: {data: Promise<UserResult[]>}) => {
             )}
             <ul className="space-y-2 px-2">
                 {users.map((user) => (
-                    <UserItem key={user.id} username={user.username} imageUrl={user.image_url} isLive={true}/>
+                    <UserItem key={user.id} username={user.username} imageUrl={user.image_url} isLive={user.is_live}/>
                 ))}
             </ul>
 

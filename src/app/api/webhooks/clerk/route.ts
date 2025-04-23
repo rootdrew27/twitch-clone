@@ -45,7 +45,7 @@ export async function POST(req: Request) {
   // updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
   // TODO: Handle events here
-  const { id } = msg.data; //TODO: Log id of webhook
+  const clerk_id = msg.data.id; //TODO: Log id of webhook
   const eventType = msg.type;
   const {
     data: { username, image_url, external_id },
@@ -59,7 +59,7 @@ export async function POST(req: Request) {
     if (eventType === 'user.created') {
       let result1 = db.execute(
         'INSERT INTO tc_user (clerk_id, username, image_url, external_user_id) VALUES (?, ?, ?, ?);',
-        [username, image_url, external_id]
+        [clerk_id, username, image_url, external_id]
       );
       let result2 = db.execute(
         'INSERT INTO stream (name, user_id) SELECT ?, id FROM tc_user WHERE username = ?;',

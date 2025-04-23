@@ -30,6 +30,11 @@
 
 ## Database
 
+## Rendering
+
+### Short Circuit Statement
+- Convert arguments to booleans by prefixing `!!` to avoid rendering the falsy value.
+
 ## Light/Dark Mode
 
 - Visit https://mui.com/material-ui/react-switch/?srsltid=AfmBOoqu1mqjqUwcy-JebWijIPAR6dh2cvMsBYiqOKbYaVHRcavzaN22#customization
@@ -52,7 +57,9 @@
 - Debug with VSCODE:
     - Still working on this one...
 
-## Tasks
+## Security
+
+- Sensitive information should NOT be passed to client components (those with "use client").
 
 ## Future
 

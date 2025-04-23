@@ -23,7 +23,7 @@ const roomService = new RoomServiceClient(
   process.env.LIVEKIT_API_SECRET!
 );
 
-const ingressClient = new IngressClient(process.env.LIVEKIT_API_URL!)
+const ingressClient = new IngressClient(process.env.LIVEKIT_API_URL!, process.env.LIVEKIT_API_KEY, process.env.LIVEKIT_API_SECRET);
 
 export const resetIngresses = async (hostIdentity: string) => {
   const ingresses = await ingressClient.listIngress({
@@ -50,16 +50,15 @@ export const createIngress = async (ingressType: IngressInput) => {
     throw new Error("User not found!");
   }
 
-  const id = self.username + "-" + self.id;
-  const roomName = "room:" + id;
-
-  await resetIngresses(roomName);
+  await resetIngresses(self.username);
+  await resetIngresses("-"+self.id)
+  await resetIngresses("id-" + self.id)
 
   const options: CreateIngressOptions = {
     name: self.username,
-    roomName: roomName,
+    roomName: self.username,
     participantName: self.username,
-    participantIdentity: id
+    participantIdentity: 'id-' + self.id
   };
 
   if (ingressType === IngressInput.WHIP_INPUT) {
@@ -70,7 +69,7 @@ export const createIngress = async (ingressType: IngressInput) => {
       encodingOptions: {
         case: "preset",
         value: IngressVideoEncodingPreset.H264_1080P_30FPS_3_LAYERS
-      } 
+      }
     });
     options.audio = new IngressAudioOptions({
       source: TrackSource.MICROPHONE,
@@ -84,7 +83,7 @@ export const createIngress = async (ingressType: IngressInput) => {
   const ingress = await ingressClient.createIngress(
     ingressType,
     options,
-  )
+  );
 
   if (!ingress || !ingress.url || !ingress.streamKey){
     throw new Error("Failed to create Ingress!")
@@ -95,6 +94,8 @@ export const createIngress = async (ingressType: IngressInput) => {
   await db.execute("UPDATE stream SET ingress_id = ?, server_url = ?, stream_key = ? WHERE user_id = ?", [ingress.ingressId, ingress.url, ingress.streamKey, self.id]);
 
   revalidatePath(`/u/${self.username}/keys`);
+
+  await db.end();
 
   return;
 

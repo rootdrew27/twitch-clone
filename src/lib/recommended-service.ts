@@ -4,26 +4,27 @@ import { makeConn } from "@/lib/db";
 
 import { getSelf } from "@/lib/auth-service";
 
-import { UserResult } from "@/models/definitions";
+import { RecommendedResult } from "@/models/definitions";
 
 export const getRecommended = async () => {
   const db = await makeConn();
   const user = await getSelf();
-  let users: UserResult[];
+  let users: RecommendedResult[];
   let fields: FieldPacket[];
   if (!user) {
-    [users, fields] = await db.query<UserResult[]>(
-      "SELECT id, username, image_url FROM tc_user ORDER BY created_at DESC"
+    [users, fields] = await db.query<RecommendedResult[]>(
+      "SELECT tc_user.id, username, image_url, is_live FROM tc_user JOIN stream ON tc_user.id = stream.user_id ORDER BY tc_user.created_at DESC"
     );
   } else {
-    [users, fields] = await db.query<UserResult[]>(
-      `SELECT id, username, image_url 
+    [users, fields] = await db.query<RecommendedResult[]>(
+      `SELECT tc_user.id, username, image_url, is_live
             FROM tc_user
+            JOIN stream ON tc_user.id = stream.user_id
         WHERE username != ? 
             AND
-        id NOT IN (SELECT following_id FROM follow WHERE follower_id = ?)
-        ORDER BY created_at DESC;`,
-      [user.username, user.id]
+        tc_user.id NOT IN (SELECT following_id FROM follow WHERE follower_id = ? UNION SELECT blocker_id FROM block WHERE blocked_id = ?)
+        ORDER BY tc_user.created_at DESC;`,
+      [user.username, user.id, user.id]
     );
   }
 

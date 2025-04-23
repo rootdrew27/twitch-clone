@@ -47,8 +47,8 @@ export const ConnectModal = () => {
     startTransition(() => {
       createIngress(parseInt(ingressType))
       .then(() => {
-        toast.success("Ingress Created.");
         closeRef?.current?.click();
+        toast.success("Ingress Created.");
       })
       .catch(() => toast.error("Something went wrong!"))
     })
