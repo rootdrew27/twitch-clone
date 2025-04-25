@@ -1,5 +1,8 @@
 # Setup LiveKit Ingress Service
 For Linux
+
+**NOTE** This guide is not complete and likely will NOT work!
+
 ---
 1. Install Go
 ```

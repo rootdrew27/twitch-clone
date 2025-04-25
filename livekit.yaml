@@ -8,17 +8,19 @@ rtc:
   # the host has a public IP address, but is not exposed to the process.
   # LiveKit will attempt to use STUN to discover the true IP, and advertise
   # that IP with its clients
-  use_external_ip: true
-# redis:
+  # use_external_ip: true
+redis:
 #   # redis is recommended for production deploys
-#   address: my-redis-server.name:6379
+  address: localhost:6379
+  # username: 
+  # password:
 
 ingress:
-  rtmp_base_url: RTMP url prefix pointing to the Ingress external IP address or load balancer
-  whip_base_url: WHIP url prefix pointing to the Ingress external IP address or load balancer
+  rtmp_base_url: rtmp://localhost #RTMP url prefix pointing to the Ingress external IP address or load balancer
+  # whip_base_url: WHIP url prefix pointing to the Ingress external IP address or load balancer
 keys:
-  # key-value pairs
-  your_api_key: "api-dev-key" 
+  # api-key:secret pairs
+  devkey: secret_secret_secret_secret_secret_secret
 # When enabled, LiveKit will expose prometheus metrics on :6789/metrics
 #prometheus_port: 6789
 # turn:
@@ -26,4 +28,4 @@ keys:
 #   # domain must match tls certificate
 #   domain: <turn.myhost.com>
 #   # defaults to 3478. If not using a load balancer, must be set to 443.
-#   tls_port: 3478
+#   tls_port: 443
