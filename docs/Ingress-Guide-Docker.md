@@ -1,6 +1,6 @@
 # Ingress Service Guide on Ubuntu
 
-- This guide is tailored for Ubuntu 22.04 and utilizes docker to run the ingress service. 
+- This guide is tailored for Ubuntu 22.04 and utilizes LiveKit's docker image to run the ingress service. 
 
 ### Redis
 
@@ -24,12 +24,13 @@ rtc:
   port_range_start: 50000
   port_range_end: 60000
 redis:
-  address: localhost:6379
+  address: <host_ip>:6379
 ingress:
   rtmp_base_url: rtmp://<host_ip>
 keys:
     <api_key>: <api_secret>
 ```
+- **Note** that your `<host_ip>` is not localhost or 127.0.0.1, it is the IP of device on your network.
 
 - Start the livekit server:
 ```
@@ -48,9 +49,10 @@ redis:
   address: <host_ip>:6379
 ```
 
+- Start the docker daemon
 - Run the docker container.
 ```
-run --rm -e INGRESS_CONFIG_BODY="`cat ./ingress.yaml`" -p 1935:1935 -p 8080:8080 livekit/ingress
+docker run --rm -e INGRESS_CONFIG_BODY="`cat ./ingress.yaml`" -p 1935:1935 -p 8080:8080 livekit/ingress
 ```
 - **Note** the opening of ports 1935 (RTMP) and 8080 (WHIP) as these are the defaults (set via the ingress.yaml config file).
 
@@ -70,7 +72,7 @@ run --rm -e INGRESS_CONFIG_BODY="`cat ./ingress.yaml`" -p 1935:1935 -p 8080:8080
 
 - Create the ingress (with the livekit cli or the ingress api), for example:
 ```
-lk ingress create --config ingress.json
+lk ingress create ingress.json
 ```
 - This will output the RTMP URL and the stream key needed in OBS.
 
