@@ -1,8 +1,9 @@
 # LiveKit Setup (Local)
 
-- This guide is tailored for Ubuntu 22.04 and utilizes LiveKit's docker image to run the ingress service. 
+This guide is tailored for Ubuntu 22.04 and utilizes LiveKit's docker image to run the ingress service. 
 
-## Prerequisites  
+## Prerequisites
+
 Ensure that Redis is configured properly with a user (besides the default). See the [Redis Setup](docs\Redis-Setup.md) for details. Additionally, setup Docker. See the [Docker's Guide](https://docs.docker.com/desktop/setup/install/linux/ubuntu/) for details.
 
 ## LiveKit Server

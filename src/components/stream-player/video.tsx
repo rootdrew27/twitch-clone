@@ -24,6 +24,9 @@ export const Video = ({hostName, hostIdentity}: VideoProps) => {
     {source: Track.Source.ScreenShare}
   ]);
 
+  // console.log("Participant: ", participant);
+  // console.log(tracks);
+
   let content;
 
   if (!participant && connectionState === ConnectionState.Connected){

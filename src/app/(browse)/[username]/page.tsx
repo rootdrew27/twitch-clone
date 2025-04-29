@@ -7,9 +7,9 @@ import { isBlockingUser, isBlockedByUser } from "@/lib/block-service";
 import { Actions } from "./_components/actions";
 
 interface UserPageProps {
-    params: {
+    params: Promise<{
         username: string;
-    };
+    }>;
 };
 
 const UserPage = async ({params}: UserPageProps) => {

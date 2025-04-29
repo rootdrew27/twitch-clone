@@ -1,16 +1,14 @@
 import { currentUser } from "@clerk/nextjs/server";
 
-import { use } from "react";
-
 import { getUserByUsername } from "@/lib/user-service";
 
 import { StreamPlayer } from "@/components/stream-player";
 import { getStream } from "@/lib/stream-service";
 
 interface CreatorPageProps {
-    params: {
+    params: Promise<{
         username: string;
-    }
+    }>
 }
 
 const CreatorPage = async ({ params }: CreatorPageProps) => {
@@ -29,6 +27,7 @@ const CreatorPage = async ({ params }: CreatorPageProps) => {
             <StreamPlayer 
                 user={user}
                 stream={stream}
+                livekit_url={process.env.LIVEKIT_WS_URL!}
                 isFollowing={true}
             />
         </div>
