@@ -1,19 +1,10 @@
-# Ingress Service Guide on Ubuntu
+# LiveKit Setup (Local)
 
-- This guide is tailored for Ubuntu 22.04 and utilizes docker to run the ingress service. 
+- **Note**: This guide is tailored for Ubuntu 22.04 and utilizes docker to run the ingress service. 
 
-### Redis
-
-- Modify the Redis config file `sudo vim /etc/redis/redis.conf` by changing the following:
-    - `bind 127.0.0.1 ::1` --> `bind 0.0.0.0`
-    - `protected-mode yes` --> `protected-mode no`
-
-- Start (or restart if already running) the redis server:
-```
-sudo systemctl start redis-server 
-```
-
-### LiveKit Server
+## Prerequisites  
+Ensure that Redis is configured properly with a user (besides the default). See the [Redis Setup](docs\Redis-Setup.md) for details. Additionally, setup Docker. See the [Docker's Guide](https://docs.docker.com/desktop/setup/install/linux/ubuntu/) for details.
+## LiveKit Server
 
 - Create a YAML configuration file for the livekit server with `vim livekit.yaml` and add the following:
 ```
@@ -36,7 +27,7 @@ keys:
 livekit-server --config livekit.yaml
 ```
 
-### Ingress Service (Docker)
+## Ingress Service (Docker)
 
 - Make a configuration file for the ingress service with `vim ingress.yaml` and add the following:
 ```
@@ -54,7 +45,7 @@ run --rm -e INGRESS_CONFIG_BODY="`cat ./ingress.yaml`" -p 1935:1935 -p 8080:8080
 ```
 - **Note** the opening of ports 1935 (RTMP) and 8080 (WHIP) as these are the defaults (set via the ingress.yaml config file).
 
-### Ingress Creation
+## Ingress Creation
 
 - Create an ingress creation config with `vim ingress.json` and add the following:
 ```
@@ -74,7 +65,7 @@ lk ingress create --config ingress.json
 ```
 - This will output the RTMP URL and the stream key needed in OBS.
 
-### Streaming
+## Streaming
 
 - In OBS Settings > Stream set the server to **rtmp://<host_ip>:1935** and set the stream key.
 
