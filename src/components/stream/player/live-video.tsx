@@ -4,10 +4,10 @@ import { useRef, useState, useEffect } from 'react';
 
 import { useTracks } from '@livekit/components-react';
 import { Participant, Track } from 'livekit-client';
-import { FullscreenControl } from "./fullscreen-control";
+import { FullscreenControl } from "../controls/fullscreen-control";
 
 import { useEventListener } from "usehooks-ts";
-import { VolumeControl } from './volume-control';
+import { VolumeControl } from '../controls/volume-control';
 
 interface LiveVideoProps {
   participant: Participant;

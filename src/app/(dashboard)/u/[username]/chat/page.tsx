@@ -28,7 +28,7 @@ const ChatPage = async () => {
         <ToggleCard
           field="is_chat_followers_only"
           label="Enable Follower Only Chat"
-          value={stream.is_chat_follower_only}
+          value={stream.is_chat_followers_only}
         />
       </div>
     </div>

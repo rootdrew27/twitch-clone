@@ -19,6 +19,11 @@ body,
   display: none;
 }
 
+@theme {
+  --breakpoint-3xl: 120rem;
+  --breakpoint-4xl: 140rem;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);

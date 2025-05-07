@@ -4,8 +4,6 @@ import { ConnectionState, Track } from "livekit-client"
 
 import { useConnectionState, useRemoteParticipant, useTracks } from "@livekit/components-react";
 
-import { useRoomContext } from "@livekit/components-react";
-
 import { OfflineVideo } from "./offline-video";
 import { LoadingVideo } from "./loading-video";
 import { LiveVideo } from "./live-video";
@@ -38,7 +36,7 @@ export const Video = ({hostName, hostIdentity}: VideoProps) => {
   }
 
   return (
-    <div className="aspect-video border-b group relative">
+    <div className="aspect-video border-b mx-auto relative max-w-[calc(1480px)]">
       {content}
     </div>
   )

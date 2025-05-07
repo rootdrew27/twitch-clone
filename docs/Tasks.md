@@ -1,5 +1,9 @@
 # Tasks
 
+## UI
+- [ ] Creator Dashboard should **not** be scrollable.
+- [ ] The center columns should be scrollable.
+
 ## Ingress
 - [x] Build Livekit Ingress binary (service).
 - [ ] Configure
