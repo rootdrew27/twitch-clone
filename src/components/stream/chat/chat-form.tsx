@@ -59,7 +59,7 @@ export const ChatForm : FC<ChatFormProps> = (props) => {
           value={props.value}
           disabled={isDisabled}
           placeholder="Send a message."
-          className={cn("border-white/10", props.isChatFollowersOnly && "rounded-t-none border-t-0")}
+          className="border-white/10"
         >
         </Input>
       </div>

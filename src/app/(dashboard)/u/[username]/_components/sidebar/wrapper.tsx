@@ -13,7 +13,7 @@ export const Wrapper = ({
     const { collapsed } = useCreatorSidebar((state) => state)
 
     return (
-        <aside className={cn("fixed left-0 flex flex-col w-60 h-full bg-background border-r z-50", collapsed && "w-[70px]")}>
+        <aside className={cn("fixed left-0 flex md:w-60 flex-col w-[70px] h-full bg-background border-r z-50", collapsed && "md:w-[70px]")}>
             {children}
         </aside>
     )

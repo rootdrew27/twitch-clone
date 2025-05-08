@@ -34,9 +34,7 @@ export const ChatCommunity: FC<ChatCommunityProps> = (props) => {
       </p>
     </div>
   }
-
-  console.log(`Participatns: ${participants}`)
-
+  
   const filteredParticipants = useMemo(() => {
 
     // const deduped = participants.reduce((acc, p) => {

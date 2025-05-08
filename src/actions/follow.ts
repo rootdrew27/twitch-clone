@@ -14,7 +14,7 @@ export const onFollow = async (id:string) => {
             revalidatePath('/(browse)/[username]', 'page');
         }
 
-        return;
+        return followedUser;
     } catch (err) {
         console.log(err);
         throw new Error("Internal error!")
@@ -31,7 +31,7 @@ export const onUnfollow = async (id: string) => {
             revalidatePath('/(browse)/[username]', 'page');
         }
 
-        return unfollowedUser.username
+        return unfollowedUser
 
     } catch (err) {
         console.log(err);

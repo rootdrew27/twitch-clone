@@ -13,7 +13,6 @@ interface ChatMessageProps {
 
 export const ChatMessage: FC<ChatMessageProps> = (props) => {
   const color = stringToColor(props.data.from?.name || "");
-  console.log(color)
 
   return (
     <div className="flex gap-2 p-2 rounded-md hover:bg-white/5">

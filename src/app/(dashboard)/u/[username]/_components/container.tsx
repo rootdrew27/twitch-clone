@@ -26,7 +26,7 @@ export const Container = ({
     }, [matches, onCollapse, onExpand])
 
     return (
-        <div className={cn("flex-1 ml-[70px]", collapsed ? "" : "ml-60")}>
+        <div className={cn("flex-1 ml-[70px] md:ml-60", collapsed && "md:ml-[70px]")}>
             {children}
         </div>
     )

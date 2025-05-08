@@ -34,8 +34,8 @@ export interface RecommendedResult extends UserResult, StreamResult {};
 
 export interface FollowingResult extends UserResult, StreamResult {};
 
-export type FieldType = "is_chat_enabled" | "is_chat_delayed" | "is_chat_followers_only";
+export type FieldType = "name" | "is_chat_enabled" | "is_chat_delayed" | "is_chat_followers_only";
 export interface StreamConfig {
     field: FieldType;
-    value: boolean;
+    value: boolean | string;
 }

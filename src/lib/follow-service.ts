@@ -79,7 +79,7 @@ export const followUser = async (id: string) => {
   );
 
   await db.end();
-  return results[1][0];
+  return results[1][0] as FollowingResult;
 };
 
 export const unfollowUser = async (id: string) => {
@@ -104,5 +104,5 @@ export const unfollowUser = async (id: string) => {
   );
 
   db.end();
-  return result[1][0];
+  return result[1][0] as FollowingResult;
 };

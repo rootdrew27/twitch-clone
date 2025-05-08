@@ -1,16 +1,15 @@
 # Tasks
 
 ## UI
-- [ ] Creator Dashboard should **not** be scrollable.
-- [ ] The center columns should be scrollable.
+- [x] Make the center section of the Creator Dashbord scrollable.
 
 ## Ingress
 - [x] Build Livekit Ingress binary (service).
-- [ ] Configure
+- [x] Configure
 
 ## Redis
-
-- [ ] Setup
+- [x] Setup
+- [ ] Optimize
 
 ## Database
 - [ ] Replace queries with Stored Procedures.
@@ -19,6 +18,7 @@
     - [ ] Add indexes.
 
 ## Auth
+- [ ] Replace Clerk
 - [ ] Proper error message when duplicate username is used for user creation.
 
 ## General
@@ -27,8 +27,11 @@
 ## Nav Bar
 - [ ] Add links to menu items.
 
-## User-Item
+## User-Item (Clerk)
 - [ ] Add Skeleton
+
+## User Dashbord
+- [ ] Host should not be able to follow/unfollow themselves
 
 ## Search
 - [ ] Review [FAISS](https://huggingface.co/learn/llm-course/en/chapter5/6?fw=pt)

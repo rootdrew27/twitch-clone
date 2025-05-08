@@ -24,7 +24,7 @@ export const ChatList: FC<ChatListProps> = (props) => {
   }
 
   return (
-    <div className="flex flex-col-reverse overflow-y-auto p-3 h-full max-h-full">
+    <div className="flex flex-col-reverse overflow-y-auto hidden-scrollbar p-3 h-full max-h-full">
       {props.messages.map((message) => (
         <ChatMessage 
           key={message.timestamp}
@@ -35,7 +35,7 @@ export const ChatList: FC<ChatListProps> = (props) => {
   )
 }
 
-export const ChatSkeleton = () => {
+export const ChatListSkeleton = () => {
   return (
     <div className="flex h-full items-center justify-center">
       <Skeleton className="w-1/2 h-6" />
