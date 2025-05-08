@@ -39,17 +39,20 @@ export const ChatCommunity: FC<ChatCommunityProps> = (props) => {
 
   const filteredParticipants = useMemo(() => {
 
-    const deduped = participants.reduce((acc, p) => {
-      console.log(p)
-      const hostAsViewer = p.identity.replace('id', 'host');
-      if (!acc.some((p) => p.identity === hostAsViewer)) {
-        acc.push(p)
-      }
-      return acc;
-    }, [] as (RemoteParticipant | LocalParticipant)[])
+    // const deduped = participants.reduce((acc, p) => {
+    //   const hostAsViewer = p.identity.replace('id', 'host');
+    //   if (!acc.some((p) => p.identity === hostAsViewer)) {
+    //     acc.push(p);
+    //   }
+    //   return acc;
+    // }, [] as (RemoteParticipant | LocalParticipant)[])
 
-    return deduped.filter((participant) => {
-      return participant.name?.toLowerCase().includes(debouncedValue.toLowerCase())
+    return participants.filter((participant) => {
+      if (participant.identity.includes("host")){
+        return false
+      } else {
+        return participant.name?.toLowerCase().includes(debouncedValue.toLowerCase())
+      }
     });
 
   }, [participants, debouncedValue])

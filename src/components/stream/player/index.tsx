@@ -46,8 +46,8 @@ export const StreamPlayer = ({user, stream, livekit_url, isFollowing}: StreamPla
         serverUrl={livekit_url}
         className={cn("flex flex-col lg:flex-row h-full", collapsed && "")}
       >
-        <div className={cn("flex-1 lg:w-full hidden-scrollbar", matches && "")}>
-          <div className="bg-black">
+        <div className={cn("lg:flex-1 lg:w-full hidden-scrollbar h-fit", matches && "")}>
+          <div className="bg-black h-fit">
             <Video
               hostName={user.username}
               hostIdentity={`id-${user.id}`}
