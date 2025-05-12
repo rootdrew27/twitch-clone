@@ -1,14 +1,17 @@
-"use client";
+'use client';
 
-import { FC } from "react";
-import { UserIcon } from "lucide-react";
+import { FC } from 'react';
+import { UserIcon } from 'lucide-react';
 
-import { useParticipants, useRemoteParticipant } from "@livekit/components-react"
+import {
+  useParticipants,
+  useRemoteParticipant,
+} from '@livekit/components-react';
 
-import { UserAvatar, UserAvatarSkeleton } from "@/components/user-avatar";
-import { VerifiedMark } from "@/components/verified-mark";
-import { Actions, ActionsSkeleton } from "./actions";
-import { Skeleton } from "@/components/ui/skeleton";
+import { UserAvatar, UserAvatarSkeleton } from '@/components/user-avatar';
+import { VerifiedMark } from '@/components/verified-mark';
+import { Actions, ActionsSkeleton } from './actions';
+import { Skeleton } from '@/components/ui/skeleton';
 
 interface HeaderProps {
   imageUrl: string;
@@ -20,17 +23,16 @@ interface HeaderProps {
 }
 
 export const Header: FC<HeaderProps> = (props) => {
-
   const participants = useParticipants();
   const host = useRemoteParticipant(props.hostIdentity);
 
   const isLive = !!host;
-  const viewerCount = participants.length - 1; 
+  const viewerCount = participants.length - 1;
 
-  const isHost = props.viewerIdentity === props.hostIdentity;
+  const isHost = props.viewerIdentity === `host-${props.hostIdentity}`;
 
   return (
-    <div className="flex flex-col lg:flex-row items-start justify-between px-4 gap-y-4 lg:gap-y-0 pt-3">
+    <div className="flex flex-col items-start justify-between gap-y-4 px-4 pt-3 lg:flex-row lg:gap-y-0">
       <div className="flex items-center gap-x-3">
         <UserAvatar
           imageUrl={props.imageUrl}
@@ -41,23 +43,19 @@ export const Header: FC<HeaderProps> = (props) => {
         />
         <div className="space-y-1">
           <div className="flex items-center gap-x-2">
-            <h2 className="text-lg font-semibold">
-              {props.hostName}
-            </h2>
+            <h2 className="text-lg font-semibold">{props.hostName}</h2>
             <VerifiedMark />
           </div>
-          <p className="text-sm font-semibold">
-            {props.streamName}
-          </p>
+          <p className="text-sm font-semibold">{props.streamName}</p>
           {isLive ? (
-            <div className="font-semibold flex gap-x-1 items-center text-xs">
-              <UserIcon className="h-4 w-4"/>
+            <div className="flex items-center gap-x-1 text-xs font-semibold">
+              <UserIcon className="h-4 w-4" />
               <p>
-                {viewerCount} {viewerCount === 1 ? "viewer" : "viewers"}
+                {viewerCount} {viewerCount === 1 ? 'viewer' : 'viewers'}
               </p>
             </div>
           ) : (
-            <p className="font-semibold text-xs text-muted-foreground">
+            <p className="text-xs font-semibold text-muted-foreground">
               Offline
             </p>
           )}
@@ -69,14 +67,14 @@ export const Header: FC<HeaderProps> = (props) => {
         isHost={isHost}
       />
     </div>
-  )
-}
+  );
+};
 
 export const HeaderSkeleton = () => {
   return (
-    <div className="flex flex-col lg:flex-row items-start justify-between px-4 gap-y-4 lg:gap-y-0 pt-3">
+    <div className="flex flex-col items-start justify-between gap-y-4 px-4 pt-3 lg:flex-row lg:gap-y-0">
       <div className="flex items-center gap-x-3">
-        <UserAvatarSkeleton size="md"/>
+        <UserAvatarSkeleton size="md" />
         <div className="space-y-2">
           <Skeleton className="h-6 w-32" />
           <Skeleton className="h-4 w-24" />
@@ -84,5 +82,5 @@ export const HeaderSkeleton = () => {
       </div>
       <ActionsSkeleton />
     </div>
-  )
-}
+  );
+};

@@ -5,7 +5,7 @@ import { FC } from "react";
 import Image from "next/image";
 
 import { Separator } from "radix-ui";
-import { Pencil } from "lucide-react";
+import { Pencil, Image as ImageIcon } from "lucide-react";
 import { InfoModal } from "./info-modal";
 
 interface InfoCardsProps {
@@ -46,15 +46,19 @@ export const InfoCard: FC<InfoCardsProps> = (props) => {
           <h3 className="text-sm text-muted-foreground mb-2">
             Thumbnail
           </h3>
-          {props.thumbnailUrl && (
-            <div className="relative aspect-video rounded-md overflow-hidden w-[200px] border border-white/10">
-              <Image
-                fill
-                src={props.thumbnailUrl}
-                alt={props.streamName}
-              />
+          {/* Disabled to avoid incurring AWS costs during development.
+          TODO: Enable for production. */}
+          {/* <div className="relative aspect-video rounded-md overflow-hidden w-[200px] border border-white/10">
+            <Image
+              fill
+              src={`https://twitch-clone-thumbnail-bucket.s3.us-east-2.amazonaws.com/${props.hostIdentity}`}
+              alt={props.streamName}
+              
+            />
+            </div> */}
+            <div>
+              <ImageIcon />
             </div>
-          )}
         </div>
       </div>
     </div>

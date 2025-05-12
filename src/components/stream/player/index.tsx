@@ -56,7 +56,7 @@ export const StreamPlayer = ({user, stream, livekit_url, isFollowing}: StreamPla
               <>
                 <Header 
                   hostName={user.username}
-                  hostIdentity={`id-${user.id}`}
+                  hostIdentity={user.id}
                   viewerIdentity={identity}
                   imageUrl={user.image_url}
                   isFollowing={isFollowing}

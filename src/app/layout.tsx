@@ -1,4 +1,5 @@
 import { ClerkProvider } from "@clerk/nextjs";
+import { PrimeReactProvider } from 'primereact/api';
 import { dark } from "@clerk/themes";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
@@ -32,15 +33,17 @@ export default function RootLayout({
     <ClerkProvider afterSignOutUrl="/" appearance={{ baseTheme: dark }}>
       <html lang="en" suppressHydrationWarning>
         <body>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            {children}
-            <Toaster />
-          </ThemeProvider>
+          <PrimeReactProvider>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              {children}
+              <Toaster />
+            </ThemeProvider>
+          </PrimeReactProvider>
         </body>
       </html>
     </ClerkProvider>

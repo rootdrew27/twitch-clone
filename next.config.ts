@@ -1,6 +1,16 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // allows access of AWS S3 Buckets
+  images: {
+        remotePatterns: [
+          {
+            protocol: "https",
+            hostname: "twitch-clone-thumbnail-bucket.s3.us-east-2.amazonaws.com",
+            pathname: "/**"
+          }
+        ]
+  },
   // webpack: https://github.com/replicate/replicate-javascript/issues/225#issuecomment-2065499818
   webpack: (config) => {
     // solves issue with livekit using crypto package

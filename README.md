@@ -25,6 +25,7 @@ This is a video streaming app that serves as practice for the creation of Disco 
 - Redis
 - Docker
 - LiveKit
+- AWS S3
 
 - All hosted **locally**!.
 
