@@ -8,7 +8,7 @@ export const isBlockingUser = async (id: string) => {
   const self = await getSelf();
 
   if (!self) {
-    throw new Error("User not found by Clerk!");
+    return false;
   }
 
   if (self.id === id) {
@@ -32,7 +32,7 @@ export const isBlockedByUser = async (id: string) => {
   const self = await getSelf();
 
   if (!self) {
-    throw new Error("User not found by Clerk")
+    return false;
   }
 
   const db = await makeConn();

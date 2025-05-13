@@ -1,9 +1,6 @@
 'use-client';
 
-import { FC, useState, useRef, useTransition } from 'react';
-
-import { FileUpload, type FileUploadUploadEvent } from "primereact/fileupload";
-
+import { FC, useState, useTransition } from 'react';
 import {
   Dialog,
   DialogClose,
@@ -13,7 +10,7 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 
-import { Image as ImageIcon } from "lucide-react";
+// import { Image as ImageIcon, Trash } from "lucide-react";
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
@@ -21,6 +18,7 @@ import { Separator } from 'radix-ui';
 import { updateStream } from '@/actions/stream';
 import { updateThumbnail } from "@/actions/s3/thumbnail";
 import { toast } from 'sonner';
+// import { Hint } from '@/components/hint';
 
 interface InfoModalProps {
   initialName: string;
@@ -28,8 +26,8 @@ interface InfoModalProps {
 }
 
 export const InfoModal: FC<InfoModalProps> = (props) => {
-  const [thumbnailUrl, setThumbnailUrl] = useState(props.initialThumbnailUrl);
-  const hiddenInput = useRef<HTMLInputElement>(null);
+  // const [thumbnailUrl, setThumbnailUrl] = useState(props.initialThumbnailUrl);
+  // const hiddenInput = useRef<HTMLInputElement>(null);
 
   const [name, setName] = useState(props.initialName);
   const [isPending, startTransition] = useTransition();
@@ -38,7 +36,6 @@ export const InfoModal: FC<InfoModalProps> = (props) => {
     e.preventDefault();
     const formElements = e.currentTarget.elements;
     const thumbnailEle = formElements.namedItem("thumbnail") as HTMLInputElement
-    console.log(formElements)
     if (thumbnailEle.files?.length === 1) {
       updateThumbnail(thumbnailEle.files[0])
         .then(() => toast.success("Thumbnail updated."))
@@ -92,6 +89,15 @@ export const InfoModal: FC<InfoModalProps> = (props) => {
                 accept="image/*"
                 size={2000000}
               />
+              {/* <Hint label="Remove Thumbnail" asChild>
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={}
+                >
+                  <Trash className="h-4 w-4" />
+                </Button>
+              </Hint> */}
             </div>
           </div>
 

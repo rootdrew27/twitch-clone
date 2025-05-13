@@ -7,6 +7,7 @@ import Image from "next/image";
 import { Separator } from "radix-ui";
 import { Pencil, Image as ImageIcon } from "lucide-react";
 import { InfoModal } from "./info-modal";
+import { cn } from "@/lib/utils";
 
 interface InfoCardsProps {
   streamName: string;
@@ -21,7 +22,7 @@ export const InfoCard: FC<InfoCardsProps> = (props) => {
   return (
     <div className="px-4 py-4">
       <div className="rounded-xl border">
-        <div className="flex items-center gap-x-2.5 p-4">
+        <div className={cn("flex items-center gap-x-2.5 p-4", isHost ? "" : "hidden")}>
           <div className="rounded-md p-2 h-auto w-auto">
             <Pencil className="h-5 w-5"/>
           </div>

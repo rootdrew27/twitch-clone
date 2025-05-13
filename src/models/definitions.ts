@@ -5,7 +5,7 @@ export interface UserResult extends RowDataPacket {
     username: string;
     image_url: string;
     external_user_id: string
-    bio?: string;
+    bio: string | null;
 
     is_live: boolean;
     clerk_id: string;

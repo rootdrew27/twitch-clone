@@ -24,3 +24,19 @@ export const getStream = async () => {
     db.end();
   }
 }
+
+export const getStreamByUsername = async (username: string) => {
+  const db = await makeConn();
+
+  try {
+    const [streams, fields] = await db.execute<StreamResult[]>("SELECT * FROM stream JOIN tc_user ON stream.user_id = tc_user.id WHERE username = ?;", [username]);
+
+    return streams[0];
+  } catch (err) {
+    console.log(err);
+    throw new Error("Internal Error!");
+  } finally {
+    db.end();
+  }
+
+} 

@@ -12,8 +12,8 @@ import { Header, HeaderSkeleton } from "./header";
 import { Chat, ChatSkeleton } from "../chat/chat";
 import { ChatToggle } from "../chat/chat-toggle";
 import { useMediaQuery } from "usehooks-ts";
-import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { InfoCard } from "./info-card";
+import { AboutCard } from "./about-card";
 
 interface StreamPlayerProps {
   user: UserResult;
@@ -45,7 +45,7 @@ export const StreamPlayer = ({user, stream, livekit_url, isFollowing}: StreamPla
         serverUrl={livekit_url}
         className="flex flex-col lg:flex-row h-full"
       >
-        <div className="lg:flex-1 overflow-y-auto hidden-scrollbar ">
+        <div className="lg:flex-1 overflow-y-auto hidden-scrollbar">
             <div className="bg-black">
               <Video
                 hostName={user.username}
@@ -68,6 +68,13 @@ export const StreamPlayer = ({user, stream, livekit_url, isFollowing}: StreamPla
                   streamName={stream.name}
                   thumbnailUrl={stream.thumbnail_url}
                 />
+                <AboutCard 
+                  hostName={user.username}
+                  hostIdentity={user.id}
+                  viewerIdentity={identity}
+                  bio={user.bio}
+                  followedByCount={0}
+                />      
               </>
             )}
         </div>

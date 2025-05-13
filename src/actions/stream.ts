@@ -33,7 +33,7 @@ export const updateStream  = async ({field, value}: StreamConfig) => {
     }
 
     revalidatePath(`/u/${self.username}/chat`);
-    revalidatePath(`/${self.username}`); // revalidate so that every one watching the stream can must get updated data 
+    revalidatePath(`/${self.username}`); // revalidate so that every one watching the stream sees the updated settings 
 
     return;
 
