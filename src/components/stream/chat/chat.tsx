@@ -4,15 +4,14 @@ import { useMediaQuery } from 'usehooks-ts';
 
 import { useChatSidebar, ChatVariant } from '@/store/use-chat-sidebar';
 
+import { ConnectionState, ParticipantKind } from 'livekit-client';
 import {
+  ReceivedChatMessage,
+  useRoomContext,
   useChat,
   useConnectionState,
-  useLiveKitRoom,
-  useLocalParticipant,
   useRemoteParticipant,
 } from '@livekit/components-react';
-import { ConnectionState, DataPacket_Kind, ParticipantKind } from 'livekit-client';
-import { ReceivedChatMessage, useRoomContext } from '@livekit/components-react';
 import { useEffect, useMemo, useState } from 'react';
 
 import { ChatHeader, ChatHeaderSkeleton } from './chat-header';
@@ -30,7 +29,7 @@ interface ChatProps {
   isChatEnabled: boolean;
   isChatDelayed: boolean;
   isChatFollowersOnly: boolean;
-  chatMessages: ReceivedChatMessageModel[]
+  chatMessages: ReceivedChatMessageModel[];
 }
 
 export const Chat = ({
@@ -56,15 +55,17 @@ export const Chat = ({
   const isHidden = !isChatEnabled || !isOnline;
 
   const [value, setValue] = useState('');
-  const [messages, setMessages] = useState<ReceivedChatMessageModel[]>(chatMessages || []);
+  const [messages, setMessages] = useState<ReceivedChatMessageModel[]>(
+    chatMessages || []
+  );
   const { chatMessages: lkMessages, send } = useChat();
   const room = useRoomContext();
 
-  room.on("participantDisconnected", (p) => {
+  room.on('participantDisconnected', (p) => {
     if (p.identity === host?.identity) {
-      setMessages([])
+      setMessages([]);
     }
-  })
+  });
 
   useEffect(() => {
     if (matches) {
@@ -74,11 +75,15 @@ export const Chat = ({
 
   const onSubmit = async () => {
     if (!send) return;
-    
+
     // const newMessage = {timestamp: new Date(), from: viewerName, message: value };
     // setMessages([...messages, newMessage]);
     const newMessage = await send(value);
-    await storeChat(hostName, { timestamp: newMessage.timestamp, message: newMessage.message, fromName: newMessage.from.name });
+    await storeChat(hostName, {
+      timestamp: newMessage.timestamp,
+      message: newMessage.message,
+      fromName: newMessage.from.name,
+    });
     setValue('');
 
     // setMessages(messages.concat({ timestamp: newMessage.timestamp, message: newMessage.message, fromName: newMessage.from.name }))
@@ -88,13 +93,19 @@ export const Chat = ({
     setValue(value);
   };
 
-  useEffect(() =>
-    {
-      if (lkMessages.length > 0) {
-        const newMessage = lkMessages[lkMessages.length - 1]
-        setMessages([{ timestamp: newMessage.timestamp, message: newMessage.message, fromName: newMessage.from.name }].concat(messages))
+  useEffect(() => {
+    if (lkMessages.length > 0) {
+      const newMessage = lkMessages[lkMessages.length - 1];
+      setMessages(
+        [
+          {
+            timestamp: newMessage.timestamp,
+            message: newMessage.message,
+            fromName: newMessage.from.name,
+          },
+        ].concat(messages)
+      );
     }
-
   }, [lkMessages]);
 
   return (

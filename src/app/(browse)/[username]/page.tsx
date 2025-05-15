@@ -4,7 +4,6 @@ import { getUserByUsername } from '@/lib/user-service';
 import { isFollowingUser } from '@/lib/follow-service';
 import { isBlockingUser, isBlockedByUser } from '@/lib/block-service';
 
-import { Actions } from './_components/actions';
 import { StreamPlayer } from '@/components/stream/player';
 import { getStreamByUsername } from '@/lib/stream-service';
 import { getCurrentChats } from '@/actions/chat';
@@ -22,25 +21,17 @@ const UserPage = async ({ params }: UserPageProps) => {
   const stream = await getStreamByUsername(username);
 
   if (!user || !stream) {
-    return (
-      <div className="flex flex-col gap-y-4">
-        <p>User Not Found!</p>
-      </div>
-    );
+    notFound();
   }
 
   const isBlocked = await isBlockedByUser(user.id);
 
   if (isBlocked) {
-    return (
-      <div className="flex flex-col gap-y-4">
-        <p>User Not Found!</p>
-      </div>
-    );
+    notFound();
   }
 
   const isFollowing = await isFollowingUser(user.id);
-  const isBlocking = await isBlockingUser(user.id);
+  // const isBlocking = await isBlockingUser(user.id);
 
   const chatMessages = await getCurrentChats(user.username);
 
