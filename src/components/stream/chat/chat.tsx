@@ -7,15 +7,20 @@ import { useChatSidebar, ChatVariant } from '@/store/use-chat-sidebar';
 import {
   useChat,
   useConnectionState,
+  useLiveKitRoom,
+  useLocalParticipant,
   useRemoteParticipant,
 } from '@livekit/components-react';
-import { ConnectionState } from 'livekit-client';
+import { ConnectionState, DataPacket_Kind, ParticipantKind } from 'livekit-client';
+import { ReceivedChatMessage, useRoomContext } from '@livekit/components-react';
 import { useEffect, useMemo, useState } from 'react';
 
 import { ChatHeader, ChatHeaderSkeleton } from './chat-header';
 import { ChatList, ChatListSkeleton } from './chat-list';
 import { ChatForm, ChatFormSkeleton } from './chat-form';
 import { ChatCommunity } from './chat-community';
+import { getCurrentChats, storeChat } from '@/actions/chat';
+import { ReceivedChatMessageModel } from '@/models/mongo';
 
 interface ChatProps {
   hostName: string;
@@ -25,6 +30,7 @@ interface ChatProps {
   isChatEnabled: boolean;
   isChatDelayed: boolean;
   isChatFollowersOnly: boolean;
+  chatMessages: ReceivedChatMessageModel[]
 }
 
 export const Chat = ({
@@ -35,18 +41,30 @@ export const Chat = ({
   isChatEnabled,
   isChatDelayed,
   isChatFollowersOnly,
+  chatMessages,
 }: ChatProps) => {
   const matches = useMediaQuery('(max-width: 768px)');
   const { variant, onExpand } = useChatSidebar((state) => state);
   const connectionState = useConnectionState();
-  const host = useRemoteParticipant('id-' + hostIdentity);
+  const host = useRemoteParticipant({
+    kind: ParticipantKind.INGRESS,
+    identity: `id-${hostIdentity}`,
+  });
 
   const isOnline = host && connectionState == ConnectionState.Connected;
 
   const isHidden = !isChatEnabled || !isOnline;
 
   const [value, setValue] = useState('');
-  const { chatMessages: messages, send } = useChat();
+  const [messages, setMessages] = useState<ReceivedChatMessageModel[]>(chatMessages || []);
+  const { chatMessages: lkMessages, send } = useChat();
+  const room = useRoomContext();
+
+  room.on("participantDisconnected", (p) => {
+    if (p.identity === host?.identity) {
+      setMessages([])
+    }
+  })
 
   useEffect(() => {
     if (matches) {
@@ -54,27 +72,37 @@ export const Chat = ({
     }
   }, [matches, onExpand]);
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
     if (!send) return;
-
-    send(value);
+    
+    // const newMessage = {timestamp: new Date(), from: viewerName, message: value };
+    // setMessages([...messages, newMessage]);
+    const newMessage = await send(value);
+    await storeChat(hostName, { timestamp: newMessage.timestamp, message: newMessage.message, fromName: newMessage.from.name });
     setValue('');
+
+    // setMessages(messages.concat({ timestamp: newMessage.timestamp, message: newMessage.message, fromName: newMessage.from.name }))
   };
 
   const onChange = (value: string) => {
     setValue(value);
   };
 
-  const reversedMessages = useMemo(() => {
-    return messages.sort((a, b) => b.timestamp - a.timestamp);
-  }, [messages]);
+  useEffect(() =>
+    {
+      if (lkMessages.length > 0) {
+        const newMessage = lkMessages[lkMessages.length - 1]
+        setMessages([{ timestamp: newMessage.timestamp, message: newMessage.message, fromName: newMessage.from.name }].concat(messages))
+    }
+
+  }, [lkMessages]);
 
   return (
-    <div className="flex flex-col w-full bg-background border-l-0 lg:border-l">
+    <div className="flex w-full flex-col border-l-0 bg-background lg:border-l">
       <ChatHeader />
       {variant === ChatVariant.CHAT && (
         <>
-          <ChatList messages={reversedMessages} isHidden={isHidden} />
+          <ChatList receivedChats={messages} isHidden={isHidden} />
           <ChatForm
             onSubmit={onSubmit}
             value={value}
@@ -100,7 +128,7 @@ export const Chat = ({
 
 export const ChatSkeleton = () => {
   return (
-    <div className="flex flex-col w-full border-l-0 lg:border-l">
+    <div className="flex w-full flex-col border-l-0 lg:border-l">
       <ChatHeaderSkeleton />
       <ChatListSkeleton />
       <ChatFormSkeleton />

@@ -103,6 +103,6 @@ export const unfollowUser = async (id: string) => {
     [self.id, id, id]
   );
 
-  db.end();
+  await db.end();
   return result[1][0] as FollowingResult;
 };

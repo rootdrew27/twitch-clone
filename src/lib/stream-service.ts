@@ -21,7 +21,7 @@ export const getStream = async () => {
     console.log(err);
     throw new Error("Internal Error!");
   } finally {
-    db.end();
+    await db.end();
   }
 }
 
@@ -36,7 +36,7 @@ export const getStreamByUsername = async (username: string) => {
     console.log(err);
     throw new Error("Internal Error!");
   } finally {
-    db.end();
+    await db.end();
   }
 
 } 

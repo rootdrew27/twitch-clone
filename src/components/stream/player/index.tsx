@@ -14,15 +14,17 @@ import { ChatToggle } from "../chat/chat-toggle";
 import { useMediaQuery } from "usehooks-ts";
 import { InfoCard } from "./info-card";
 import { AboutCard } from "./about-card";
+import { ReceivedChatMessageModel } from "@/models/mongo";
 
 interface StreamPlayerProps {
   user: UserResult;
   stream: StreamResult;
   livekit_url: string;
   isFollowing: boolean;
+  chatMessages: ReceivedChatMessageModel[]
 }
 
-export const StreamPlayer = ({user, stream, livekit_url, isFollowing}: StreamPlayerProps) => {
+export const StreamPlayer = ({user, stream, livekit_url, isFollowing, chatMessages}: StreamPlayerProps) => {
   const matches = useMediaQuery('(max-width: 1024px)') 
   const { token, name, identity } = useViewerToken(user.username);
   const { collapsed } = useChatSidebar();
@@ -88,6 +90,7 @@ export const StreamPlayer = ({user, stream, livekit_url, isFollowing}: StreamPla
             isChatEnabled={stream.is_chat_enabled}
             isChatDelayed={stream.is_chat_delayed}
             isChatFollowersOnly={stream.is_chat_followers_only}
+            chatMessages={chatMessages}
           />
         </div>
       </LiveKitRoom>

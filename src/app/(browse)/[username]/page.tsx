@@ -7,6 +7,7 @@ import { isBlockingUser, isBlockedByUser } from '@/lib/block-service';
 import { Actions } from './_components/actions';
 import { StreamPlayer } from '@/components/stream/player';
 import { getStreamByUsername } from '@/lib/stream-service';
+import { getCurrentChats } from '@/actions/chat';
 
 interface UserPageProps {
   params: Promise<{
@@ -41,6 +42,8 @@ const UserPage = async ({ params }: UserPageProps) => {
   const isFollowing = await isFollowingUser(user.id);
   const isBlocking = await isBlockingUser(user.id);
 
+  const chatMessages = await getCurrentChats(user.username);
+
   return (
     <div className="h-full">
       <StreamPlayer
@@ -48,6 +51,7 @@ const UserPage = async ({ params }: UserPageProps) => {
         stream={stream}
         isFollowing={isFollowing}
         livekit_url={process.env.LIVEKIT_WS_URL!}
+        chatMessages={chatMessages}
       />
     </div>
 

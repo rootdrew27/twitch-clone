@@ -1,4 +1,4 @@
-const mysql = require("mysql2/promise");
+import { createConnection } from "mysql2/promise";
 
 const connOpts = {
   host: "127.0.0.1",
@@ -10,7 +10,7 @@ const connOpts = {
 
 async function insertUsers() {
   try {
-    const db = await mysql.createConnection(connOpts);
+    const db = await createConnection(connOpts);
     const [result] = await db.execute(
       "INSERT INTO tc_user (username) VALUES ('theSteve'), ('JoeyXYX'), ('Alec_Baldwinner');"
     );

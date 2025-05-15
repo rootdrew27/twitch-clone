@@ -6,14 +6,15 @@ import { ReceivedChatMessage } from "@livekit/components-react";
 import { Skeleton } from "@/components/ui/skeleton";
 
 import { ChatMessage } from "./chat-message";
+import { ReceivedChatMessageModel } from "@/models/mongo";
 
 interface ChatListProps {
-  messages: ReceivedChatMessage[];
+  receivedChats: ReceivedChatMessageModel[];
   isHidden: boolean;
 }
 
 export const ChatList: FC<ChatListProps> = (props) => {
-  if (props.isHidden || !props.messages || props.messages.length === 0){
+  if (props.isHidden || !props.receivedChats || props.receivedChats.length === 0){
     return (
       <div className="flex flex-1 items-center justify-center">
         <p className="text-sm text-muted-foreground">
@@ -25,10 +26,10 @@ export const ChatList: FC<ChatListProps> = (props) => {
 
   return (
     <div className="flex flex-col-reverse overflow-y-auto hidden-scrollbar p-3 h-full max-h-full">
-      {props.messages.map((message) => (
+      {props.receivedChats.map((receivedChat) => (
         <ChatMessage 
-          key={message.timestamp}
-          data={message}
+          key={receivedChat.timestamp}
+          data={receivedChat}
         />
       ))}
     </div>

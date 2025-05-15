@@ -17,7 +17,7 @@ interface InfoCardsProps {
 }
 
 export const InfoCard: FC<InfoCardsProps> = (props) => {
-  const isHost = props.viewerIdentity === props.hostIdentity;
+  const isHost = props.viewerIdentity === `host-${props.hostIdentity}`;
 
   return (
     <div className="px-4 py-4">

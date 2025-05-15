@@ -41,6 +41,6 @@ export const updateStream  = async ({field, value}: StreamConfig) => {
     console.log(err);
     throw new Error("Internal Error!")
   } finally {
-    db.end();
+    await db.end();
   }
 }

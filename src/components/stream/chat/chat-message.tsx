@@ -4,25 +4,25 @@ import { FC } from "react";
 
 import { format } from "date-fns";
 
-import { ReceivedChatMessage } from "@livekit/components-react";
 import { stringToColor } from "@/lib/utils";
+import { ReceivedChatMessageModel } from "@/models/mongo";
 
 interface ChatMessageProps {
-  data: ReceivedChatMessage
+  data: ReceivedChatMessageModel
 }
 
 export const ChatMessage: FC<ChatMessageProps> = (props) => {
-  const color = stringToColor(props.data.from?.name || "");
+  const color = stringToColor(props.data.fromName || "");
 
   return (
     <div className="flex gap-2 p-2 rounded-md hover:bg-white/5">
-      <p className="text-sm text-white/40">
+      <p className="text-sm text-white/40 hidden">
         {format(props.data.timestamp, "HH: MM")}
       </p>
       <div className="flex flex-wrap items-baseline gap-1 grow">
         <p className="text-sm font-semibold whitespace-nowrap">
           <span className="truncate" style={{ color: color }}>
-            {props.data.from?.name}
+            {props.data.fromName}
           </span>:
         </p>
         <p className="text-sm">

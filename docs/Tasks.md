@@ -1,5 +1,8 @@
 # Tasks
 
+## Chat
+- [ ] Messages should persistent!
+
 ## UI
 - [x] Make the center section of the Creator Dashbord scrollable.
 

@@ -1,6 +1,4 @@
-const mysql = require("mysql2/promise");
-//const { connOpts } = require("../../src/lib/db");
-// const { User } = require('../../src/models/definitions');
+import { createConnection } from "mysql2/promise";
 
 const connOpts = {
   host: "127.0.0.1",
@@ -12,7 +10,7 @@ const connOpts = {
 
 async function insertUser() {
   try {
-    const db = await mysql.createConnection(connOpts);
+    const db = await createConnection(connOpts);
     const [result] = await db.execute(
       "INSERT INTO tc_user (username, image_url, external_user_id, bio) VALUES (?, ?, ?, ?);",
       ["test_username", "", "", ""]

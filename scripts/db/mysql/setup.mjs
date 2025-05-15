@@ -1,4 +1,4 @@
-const mysql = require('mysql2/promise');
+import { createConnection } from 'mysql2/promise';
 
 const connOpts = {
     host: "127.0.0.1",
@@ -11,7 +11,7 @@ const connOpts = {
 console.log(connOpts);
 
 async function main() {
-    const db = await mysql.createConnection(connOpts);
+    const db = await createConnection(connOpts);
 
     // create User table (TC_ is added because 'user' is a reserved mysql keyword)
     const create_user_sql = 

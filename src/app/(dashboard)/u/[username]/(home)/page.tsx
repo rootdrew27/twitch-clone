@@ -4,6 +4,7 @@ import { getUserByUsername } from "@/lib/user-service";
 
 import { StreamPlayer } from "@/components/stream/player";
 import { getStream } from "@/lib/stream-service";
+import { getCurrentChats } from "@/actions/chat";
 
 interface CreatorPageProps {
     params: Promise<{
@@ -22,6 +23,8 @@ const CreatorPage = async ({ params }: CreatorPageProps) => {
         throw new Error("Unauthorized!");
     }
 
+    const chatMessages = await getCurrentChats(user.username);
+
     return (
         <div className="h-full">
             <StreamPlayer 
@@ -29,6 +32,7 @@ const CreatorPage = async ({ params }: CreatorPageProps) => {
                 stream={stream}
                 livekit_url={process.env.LIVEKIT_WS_URL!}
                 isFollowing={true}
+                chatMessages={chatMessages}
             />
         </div>
     )

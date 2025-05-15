@@ -30,6 +30,6 @@ export const updateUser = async (values: { bio: string }) => {
     console.log(error);
     throw new Error('Internal Error!');
   } finally {
-    db.end();
+    await db.end();
   }
 };

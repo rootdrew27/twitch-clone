@@ -19,7 +19,7 @@ export const AboutCard: FC<AboutCardProps> = (props) => {
 
   return (
     <div className="px-4 py-4">
-      <div className="flex flex-col gap-y-4 rounded-xl border border-white/10 bg-background p-4">
+      <div className="flex flex-col gap-y-4 rounded-xl border bg-background p-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-x-2 text-lg font-semibold lg:text-2xl">
             About - {props.hostName}
