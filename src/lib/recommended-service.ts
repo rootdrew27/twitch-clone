@@ -7,11 +7,15 @@ import { getSelf } from "@/lib/auth-service";
 import { RecommendedResult } from "@/models/definitions";
 
 export const getRecommended = async () => {
+  const self = await getSelf();
+
   const db = await makeConn();
-  const user = await getSelf();
+
   let users: RecommendedResult[];
   let fields: FieldPacket[];
-  if (!user) {
+
+  try {
+      if (!self) {
     [users, fields] = await db.query<RecommendedResult[]>(
       "SELECT tc_user.id, username, image_url, is_live FROM tc_user JOIN stream ON tc_user.id = stream.user_id ORDER BY tc_user.created_at DESC"
     );
@@ -24,16 +28,21 @@ export const getRecommended = async () => {
             AND
         tc_user.id NOT IN (SELECT following_id FROM follow WHERE follower_id = ? UNION SELECT blocker_id FROM block WHERE blocked_id = ?)
         ORDER BY tc_user.created_at DESC;`,
-      [user.username, user.id, user.id]
+      [self.username, self.id, self.id]
     );
   }
+    // Uncomment to see Skeletons
+    // await new Promise((resolve, reject) =>
+    //   setTimeout(() => {
+    //     resolve("");
+    //   }, 1000)
+    // );
 
-  await db.end();
-  await new Promise((resolve, reject) =>
-    setTimeout(() => {
-      resolve("");
-    }, 1000)
-  );
-
-  return users;
+    return users;
+  } catch (err) {
+    console.log(err);
+    throw new Error("Internal Error!");
+  } finally {
+    await db.end();
+  }
 };

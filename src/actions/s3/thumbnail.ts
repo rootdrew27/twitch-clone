@@ -5,14 +5,9 @@ import { revalidatePath } from 'next/cache';
 import {
   S3Client,
   PutObjectCommand,
-  DeleteObjectCommand,
   NoSuchKey,
   S3ServiceException
 } from "@aws-sdk/client-s3";
-
-import { RowDataPacket } from "mysql2/promise";
-
-import { makeConn } from "@/lib/db";
 
 import { getSelf } from "@/lib/auth-service"
 
@@ -33,7 +28,6 @@ export const updateThumbnail = async (thumbnailFile: File) => {
     }
 
     // open db connection
-    const db = await makeConn();
     const s3Client = new S3Client({
       region: 'us-east-2',
       credentials: {
@@ -41,10 +35,6 @@ export const updateThumbnail = async (thumbnailFile: File) => {
         secretAccessKey: process.env.AWS_ACCESS_KEY_SECRET!
       }
     });
-
-    // delete old thumbnail if it exists
-    const [results, fields] = await db.execute<RowDataPacket[]>("SELECT thumbnail_url FROM stream WHERE user_id = ?;", [self.id]);
-    const curThumbnailUrl = results[0].thumbnail_url;
     
     const contentType = thumbnailFile.type;
     
@@ -56,11 +46,11 @@ export const updateThumbnail = async (thumbnailFile: File) => {
     });
 
     try {
-      const s3Response = await s3Client.send(command);
+      await s3Client.send(command);
     } catch (error) {
       if (error instanceof NoSuchKey) {
         console.error(
-          `Error from S3 while updating object "${curThumbnailUrl}" from "${BUCKET_NAME}". No such key exists.`,
+          `Error from S3 while updating object "${self.id}" from "${BUCKET_NAME}". No such key exists.`,
         );
       } else if (error instanceof S3ServiceException) {
         console.error(
@@ -69,12 +59,12 @@ export const updateThumbnail = async (thumbnailFile: File) => {
       } else {
         throw error;
       }
+    } finally {
+      s3Client.destroy()
     }
 
-    // 
-
-    //revalidatePath('/');
-    //revalidatePath('/(dashboard)/')
+    revalidatePath('/');
+    revalidatePath('/(dashboard)/')
 
   } catch (error) {
     throw error;

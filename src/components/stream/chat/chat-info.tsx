@@ -9,11 +9,6 @@ interface ChatInfoProps {
 
 export const ChatInfo: FC<ChatInfoProps> = (props) => {
 
-
-  if (!props.isChatDelayed && !props.isChatFollowersOnly) {
-    return null;
-  }
-
   const hint = useMemo(() => {
     if (props.isChatFollowersOnly && !props.isChatDelayed) {
       return "Only followers can chat";

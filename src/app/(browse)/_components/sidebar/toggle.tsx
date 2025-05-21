@@ -6,10 +6,12 @@ import { ArrowLeftFromLine, ArrowRightFromLine } from "lucide-react";
 
 import { useSidebar } from "@/store/use-sidebar"
 import { Button } from "@/components/ui/button"
-import { Skeleton } from "@/components/ui/skeleton";
+import { useEffect } from "react";
+import { useMediaQuery } from "usehooks-ts";
 
 const Toggle = () => {
-    const { collapsed, onExpand, onCollapse} = useSidebar((state) => state)
+    const matches = useMediaQuery('(max-width: 768px)');
+    const { collapsed, onExpand, onCollapse } = useSidebar((state) => state)
 
     const label = collapsed ? "Expand" : "Collapse";
 

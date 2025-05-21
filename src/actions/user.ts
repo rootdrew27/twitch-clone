@@ -19,15 +19,15 @@ export const updateUser = async (values: { bio: string }) => {
   const db = await makeConn();
 
   try {
-    const [result, fields] = await db.execute(
+      await db.execute(
       'UPDATE tc_user SET bio = ? WHERE id = ?;',
       [validData.bio, self.id]
     );
 
     revalidatePath(`${self.username}`);
     revalidatePath(`/u/${self.username}`);
-  } catch (error) {
-    console.log(error);
+  } catch (err) {
+    console.log(err);
     throw new Error('Internal Error!');
   } finally {
     await db.end();

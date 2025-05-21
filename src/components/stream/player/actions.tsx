@@ -46,9 +46,13 @@ export const Actions: FC<ActionsProps> = (props) => {
       return;
     }
     if (props.isFollowing) {
-      handleUnfollow();
+      startTransition(() => {
+        handleUnfollow();
+      });
     } else {
-      handleFollow();
+      startTransition(() => {
+        handleFollow();
+      });
     }
   };
 

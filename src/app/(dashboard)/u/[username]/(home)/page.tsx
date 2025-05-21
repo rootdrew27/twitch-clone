@@ -1,6 +1,6 @@
 import { currentUser } from "@clerk/nextjs/server";
 
-import { getUserByUsername } from "@/lib/user-service";
+import { getUserWithFollowerCount } from "@/lib/user-service";
 
 import { StreamPlayer } from "@/components/stream/player";
 import { getStream } from "@/lib/stream-service";
@@ -16,7 +16,7 @@ const CreatorPage = async ({ params }: CreatorPageProps) => {
     const { username } = await params;
 
     const externalUser = await currentUser();
-    const user = await getUserByUsername(username);
+    const user = await getUserWithFollowerCount(username);
     const stream = await getStream();
 
     if (!user || !externalUser || externalUser.id !== user.clerk_id || !stream)  {

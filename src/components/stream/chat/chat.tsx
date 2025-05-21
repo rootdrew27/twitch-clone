@@ -18,7 +18,7 @@ import { ChatHeader, ChatHeaderSkeleton } from './chat-header';
 import { ChatList, ChatListSkeleton } from './chat-list';
 import { ChatForm, ChatFormSkeleton } from './chat-form';
 import { ChatCommunity } from './chat-community';
-import { getCurrentChats, storeChat } from '@/actions/chat';
+import { storeChat } from '@/actions/chat';
 import { ReceivedChatMessageModel } from '@/models/mongo';
 
 interface ChatProps {
@@ -79,13 +79,12 @@ export const Chat = ({
     // const newMessage = {timestamp: new Date(), from: viewerName, message: value };
     // setMessages([...messages, newMessage]);
     const newMessage = await send(value);
+    setValue('');
     await storeChat(hostName, {
       timestamp: newMessage.timestamp,
       message: newMessage.message,
       fromName: newMessage.from.name,
     });
-    setValue('');
-
     // setMessages(messages.concat({ timestamp: newMessage.timestamp, message: newMessage.message, fromName: newMessage.from.name }))
   };
 
@@ -93,17 +92,30 @@ export const Chat = ({
     setValue(value);
   };
 
+  // room.on('chatMessage', (newMessage, participant) => {
+  //   console.log("Chat message event fired!")
+  //   setMessages(
+  //       [
+  //         {
+  //           timestamp: newMessage.timestamp,
+  //           message: newMessage.message,
+  //           fromName: participant?.name || "Guest"
+  //         },
+  //       ].concat(messages)
+  //     );
+  // });
+
   useEffect(() => {
     if (lkMessages.length > 0) {
       const newMessage = lkMessages[lkMessages.length - 1];
-      setMessages(
+      setMessages(m =>
         [
           {
             timestamp: newMessage.timestamp,
             message: newMessage.message,
             fromName: newMessage.from.name,
           },
-        ].concat(messages)
+        ].concat(m)
       );
     }
   }, [lkMessages]);
@@ -114,19 +126,20 @@ export const Chat = ({
       {variant === ChatVariant.CHAT && (
         <>
           <ChatList receivedChats={messages} isHidden={isHidden} />
-          <ChatForm
-            onSubmit={onSubmit}
-            value={value}
-            onChange={onChange}
-            isHidden={isHidden}
-            isFollowing={isFollowing}
-            isChatFollowersOnly={isChatFollowersOnly}
-            isChatEnabled={isChatEnabled}
-            isChatDelayed={isChatDelayed}
-          />
+          {!isHidden && (
+            <ChatForm
+              onSubmit={onSubmit}
+              value={value}
+              onChange={onChange}
+              isFollowing={isFollowing}
+              isChatFollowersOnly={isChatFollowersOnly}
+              isChatEnabled={isChatEnabled}
+              isChatDelayed={isChatDelayed}
+            />
+          )}
         </>
       )}
-      {variant === ChatVariant.COMMUNITY && (
+      {variant === ChatVariant.COMMUNITY &&  (
         <ChatCommunity
           hostName={hostName}
           viewerName={viewerName}

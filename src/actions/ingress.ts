@@ -91,12 +91,17 @@ export const createIngress = async (ingressType: IngressInput) => {
 
   const db = await makeConn();
 
-  await db.execute("UPDATE stream SET ingress_id = ?, server_url = ?, stream_key = ? WHERE user_id = ?", [ingress.ingressId, ingress.url, ingress.streamKey, self.id]);
+  try {
+    await db.execute("UPDATE stream SET ingress_id = ?, server_url = ?, stream_key = ? WHERE user_id = ?", [ingress.ingressId, ingress.url, ingress.streamKey, self.id]);
+  
+    revalidatePath(`/u/${self.username}/keys`);
 
-  revalidatePath(`/u/${self.username}/keys`);
-
-  await db.end();
-
-  return;
-
+    return;
+    
+  } catch (err) {
+    console.log(err);
+    throw new Error("Internal Error!")
+  } finally {
+    await db.end();
+  }
 }

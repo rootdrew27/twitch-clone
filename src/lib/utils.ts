@@ -1,5 +1,7 @@
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
+import { makeConn } from "./db";
+import { Connection } from "mysql2/promise";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -17,3 +19,29 @@ export const stringToColor = (str: string) => {
   }
   return color
 }
+
+
+// export class MySQLContextManager {
+//   db: Connection
+
+//   constructor(db: Connection) {
+//     this.db = db
+//   }
+//   static async init() {
+//     const db = await makeConn();
+//     return new MySQLContextManager(db)
+//   }
+//   async execute(f:(db: Connection) => void, e?: (err: unknown) => void) {
+//     try {
+//       f(this.db)
+//     } catch (err) {
+//       if (e) {
+//         e(err);
+//       } else {
+//         console.log(err)
+//       } 
+//     } finally {
+//       await this.db.end()
+//     }
+//   }
+// }

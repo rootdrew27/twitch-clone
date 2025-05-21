@@ -33,6 +33,7 @@ export async function POST(req: Request) {
       'svix-signature': svix_signature,
     }) as WebhookEvent;
   } catch (err) {
+    console.log(err);
     return new Response('Bad Request', { status: 400 });
   }
 
@@ -55,18 +56,19 @@ export async function POST(req: Request) {
   // user.deleted
   // user.updated
   const db = await makeConn();
+  let result1, result2;
   try {
     if (eventType === 'user.created') {
-      let result1 = db.execute(
+      result1 = db.execute(
         'INSERT INTO tc_user (clerk_id, username, image_url, external_user_id) VALUES (?, ?, ?, ?);',
         [clerk_id, username, image_url, external_id]
       );
-      let result2 = db.execute(
+      result2 = db.execute(
         'INSERT INTO stream (name, user_id) SELECT ?, id FROM tc_user WHERE username = ?;',
         [`${username}'s stream.`, username]
       );
 
-      const [out1, out2] = await Promise.all([result1, result2]);
+      await Promise.all([result1, result2]);
     } else if (eventType === 'user.deleted') {
       await db.execute('DELETE FROM tc_user WHERE username = ?;', [username]);
     } else {
@@ -76,6 +78,7 @@ export async function POST(req: Request) {
     return new Response('OK', { status: 200 });
   } catch (err) {
     console.log(err);
+    throw new Error('Internal Error!');
   } finally {
     await db.end();
   }

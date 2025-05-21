@@ -10,8 +10,6 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { updateStream } from "@/actions/stream"; 
 
 import type { FieldType } from "@/models/definitions";
-import { StreamConfig } from "@/models/definitions";
-
 
 interface ToggleCardProps {
   field: FieldType;

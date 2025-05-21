@@ -1,12 +1,13 @@
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 
-import { getUserByUsername } from '@/lib/user-service';
+import { getUserWithFollowerCount } from '@/lib/user-service';
 import { isFollowingUser } from '@/lib/follow-service';
-import { isBlockingUser, isBlockedByUser } from '@/lib/block-service';
+import { isBlockedByUser } from '@/lib/block-service';
 
 import { StreamPlayer } from '@/components/stream/player';
 import { getStreamByUsername } from '@/lib/stream-service';
 import { getCurrentChats } from '@/actions/chat';
+import { getSelf } from '@/lib/auth-service';
 
 interface UserPageProps {
   params: Promise<{
@@ -17,7 +18,11 @@ interface UserPageProps {
 const UserPage = async ({ params }: UserPageProps) => {
   const { username } = await params;
 
-  const user = await getUserByUsername(username);
+  const self = await getSelf();
+  const user = await getUserWithFollowerCount(username);
+  if (self && self.id === user.id) {
+    redirect(`/u/${self.username}`)
+  }
   const stream = await getStreamByUsername(username);
 
   if (!user || !stream) {

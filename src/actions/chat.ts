@@ -14,7 +14,7 @@ export const getCurrentChats = async (hostName:string) => {
     const db = client.db("chats");
 
     const projection = {_id: 0, timestamp: 1, message: 1, fromName:1}
-    const chats = (await db.collection<ReceivedChatMessageModel>(hostName).find().project(projection).toArray()) as ReceivedChatMessageModel[];
+    const chats = (await db.collection<ReceivedChatMessageModel>(hostName).find().sort({ timestamp: -1 }).project(projection).toArray()) as ReceivedChatMessageModel[];
 
     return chats;
 
@@ -34,7 +34,7 @@ export const storeChat = async (hostName: string, chat: { timestamp: number, mes
   try {
     const db = client.db("chats");
 
-    const result = await db.collection(hostName).insertOne(chat as ReceivedChatMessageModel);
+    await db.collection(hostName).insertOne(chat as ReceivedChatMessageModel);
 
   } catch (err) {
     console.log(err);

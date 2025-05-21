@@ -1,9 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
-
 import {cn } from "@/lib/utils";
 import { useSidebar } from "@/store/use-sidebar";
+import { useMediaQuery } from "usehooks-ts";
 
 interface WrapperProps {
     children: React.ReactNode;
@@ -12,9 +11,8 @@ interface WrapperProps {
 const Wrapper = ({ children }: WrapperProps) => {
     const { collapsed } = useSidebar((state) => state);
 
-
     return (
-        <aside className={cn("fixed left-0 flex flex-col w-60 h-full bg-background border-r z-50", collapsed && "w-[70px]")}>
+        <aside className={cn("absolute left-0 flex flex-col w-[70px] h-full bg-background border-r z-50", !collapsed && "w-60")}>
             {children}
         </aside>
     )

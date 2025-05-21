@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition, useRef, ElementRef } from "react";
+import { useState, useTransition, useRef } from "react";
 import { AlertTriangle } from "lucide-react";
 
 import { IngressInput } from "livekit-server-sdk";

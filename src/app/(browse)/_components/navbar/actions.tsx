@@ -1,4 +1,4 @@
-import { SignInButton, UserButton, SignUpButton } from "@clerk/nextjs";
+import { SignInButton, UserButton } from "@clerk/nextjs";
 import { currentUser } from "@clerk/nextjs/server";
 
 import { Button } from "@/components/ui/button";

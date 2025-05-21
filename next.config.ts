@@ -1,6 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  dev: {
+    port: 3000,
+    hostname: '0.0.0.0'
+  },
   // allows access of AWS S3 Buckets
   images: {
         remotePatterns: [

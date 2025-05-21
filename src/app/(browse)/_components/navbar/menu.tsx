@@ -3,8 +3,8 @@ import {
     MenubarContent,
     MenubarItem,
     MenubarMenu,
-    MenubarSeparator,
-    MenubarShortcut,
+    // MenubarSeparator,
+    // MenubarShortcut,
     MenubarTrigger,
   } from "@/components/ui/menubar"
 

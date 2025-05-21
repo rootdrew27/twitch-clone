@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import { UserButton } from "@clerk/nextjs";
 
 export const Actions = async () => {
-  const user = await currentUser();
 
   return (
     <div className="flex items-center justify-end gap-x-2">

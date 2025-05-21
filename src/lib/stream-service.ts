@@ -38,5 +38,4 @@ export const getStreamByUsername = async (username: string) => {
   } finally {
     await db.end();
   }
-
 } 

@@ -100,16 +100,6 @@ export const InfoModal: FC<InfoModalProps> = (props) => {
               </Hint> */}
             </div>
           </div>
-
-
-          {/* <FileUpload
-            mode="basic"
-            name="thumbnail"
-            accept="image/*"
-            maxFileSize={4000000} // 4 MB
-            chooseLabel="Browse"
-            className="border-2 px-2 border-white/10 rounded-md bg-background"
-          />        */}
           <div className="flex justify-between">
             <DialogClose asChild>
               <Button type="button" variant="outline" disabled={isPending}>

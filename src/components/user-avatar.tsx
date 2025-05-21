@@ -17,6 +17,7 @@ const avatarSizes = cva(
         variants: {
             size: {
                 default: "h-8 w-8",
+                sm: "h-9 w-9",
                 md: "h-11 w-11",
                 lg: "h-14 w-14",
             }
@@ -54,7 +55,7 @@ export const UserAvatar = ({username, imageUrl, isLive, showBadge, size}: UserAv
     )
 }
 
-interface UserAvatarSkeletonProps extends VariantProps<typeof avatarSizes> {};
+type UserAvatarSkeletonProps = VariantProps<typeof avatarSizes>;
 
 export const UserAvatarSkeleton = ({
     size,

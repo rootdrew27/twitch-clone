@@ -21,13 +21,13 @@ export const updateStream  = async ({field, value}: StreamConfig) => {
     const values = [value, self.id]
 
     if (field === "is_chat_enabled") {
-      const [results, fields] = await db.execute("UPDATE stream SET is_chat_enabled = ? WHERE user_id = ?;", values);
+      await db.execute("UPDATE stream SET is_chat_enabled = ? WHERE user_id = ?;", values);
     } else if (field === "is_chat_delayed") {
-      const [results, fields] = await db.execute("UPDATE stream SET is_chat_delayed = ? WHERE user_id = ?;", values);
+      await db.execute("UPDATE stream SET is_chat_delayed = ? WHERE user_id = ?;", values);
     } else if (field === "is_chat_followers_only") {
-      const [results, fields] = await db.execute("UPDATE stream SET is_chat_followers_only = ? WHERE user_id = ?;", values);
+      await db.execute("UPDATE stream SET is_chat_followers_only = ? WHERE user_id = ?;", values);
     } else if (field == "name") {
-      const [results, fields] = await db.execute("UPDATE stream SET name = ? WHERE user_id = ?;", values);
+      await db.execute("UPDATE stream SET name = ? WHERE user_id = ?;", values);
     } else {
       throw new Error("Internal Error: The field parameter does not match a valid case.");
     }

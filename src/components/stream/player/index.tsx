@@ -15,7 +15,6 @@ import { useMediaQuery } from "usehooks-ts";
 import { InfoCard } from "./info-card";
 import { AboutCard } from "./about-card";
 import { ReceivedChatMessageModel } from "@/models/mongo";
-
 interface StreamPlayerProps {
   user: UserResult;
   stream: StreamResult;
@@ -25,7 +24,7 @@ interface StreamPlayerProps {
 }
 
 export const StreamPlayer = ({user, stream, livekit_url, isFollowing, chatMessages}: StreamPlayerProps) => {
-  const matches = useMediaQuery('(max-width: 1024px)') 
+  const matches = useMediaQuery('(max-width: 1024px)')
   const { token, name, identity } = useViewerToken(user.username);
   const { collapsed } = useChatSidebar();
 
@@ -45,7 +44,7 @@ export const StreamPlayer = ({user, stream, livekit_url, isFollowing, chatMessag
       <LiveKitRoom
         token={token}
         serverUrl={livekit_url}
-        className="flex flex-col lg:flex-row h-full"
+        className="flex flex-col relative lg:flex-row h-full"
       >
         <div className="lg:flex-1 overflow-y-auto hidden-scrollbar">
             <div className="bg-black">
@@ -75,7 +74,7 @@ export const StreamPlayer = ({user, stream, livekit_url, isFollowing, chatMessag
                   hostIdentity={user.id}
                   viewerIdentity={identity}
                   bio={user.bio}
-                  followedByCount={0}
+                  followedByCount={user.follower_count!}
                 />      
               </>
             )}
