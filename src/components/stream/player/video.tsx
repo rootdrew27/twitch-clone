@@ -39,7 +39,7 @@ export const Video = ({ hostName, hostIdentity }: VideoProps) => {
   }
 
   return (
-    <div className="aspect-video border-b mx-auto relative max-w-[calc(1480px)]">
+    <div className="relative mx-auto aspect-video max-w-[calc(1480px)] border-b">
       {content}
     </div>
   );

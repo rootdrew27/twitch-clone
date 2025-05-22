@@ -19,10 +19,10 @@ export const updateUser = async (values: { bio: string }) => {
   const db = await makeConn();
 
   try {
-      await db.execute(
-      'UPDATE tc_user SET bio = ? WHERE id = ?;',
-      [validData.bio, self.id]
-    );
+    await db.execute('UPDATE tc_user SET bio = ? WHERE id = ?;', [
+      validData.bio,
+      self.id,
+    ]);
 
     revalidatePath(`${self.username}`);
     revalidatePath(`/u/${self.username}`);

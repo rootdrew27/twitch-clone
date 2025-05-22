@@ -18,8 +18,8 @@ export const Recommended = ({
   return (
     <div>
       {showLabel && (
-        <div className="pl-6 mb-4">
-          <p className="text-sm text-muted-foreground underline-offset-1">
+        <div className="mb-4 pl-6">
+          <p className="text-muted-foreground text-sm underline-offset-1">
             Recommended
           </p>
         </div>

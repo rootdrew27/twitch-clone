@@ -27,10 +27,10 @@ export const getStreams = async () => {
       );
 
       await new Promise((resolve, reject) =>
-      setTimeout(() => {
-        resolve("");
-      }, 1000)
-    );
+        setTimeout(() => {
+          resolve('');
+        }, 1000)
+      );
 
       return streams as HomeResult[];
     } else {

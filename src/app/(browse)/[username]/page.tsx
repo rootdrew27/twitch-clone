@@ -21,7 +21,7 @@ const UserPage = async ({ params }: UserPageProps) => {
   const self = await getSelf();
   const user = await getUserWithFollowerCount(username);
   if (self && self.id === user.id) {
-    redirect(`/u/${self.username}`)
+    redirect(`/u/${self.username}`);
   }
   const stream = await getStreamByUsername(username);
 
@@ -50,8 +50,7 @@ const UserPage = async ({ params }: UserPageProps) => {
         chatMessages={chatMessages}
       />
     </div>
-
-  )
+  );
 };
 
 export default UserPage;

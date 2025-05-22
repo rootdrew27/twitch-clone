@@ -17,7 +17,9 @@ export const useViewerToken = (hostUsername: string) => {
         const viewerToken = await createViewerToken(hostUsername);
         setToken(viewerToken);
 
-        const decodedToken = jwtDecode<JwtPayload & {name?:string}>(viewerToken)
+        const decodedToken = jwtDecode<JwtPayload & { name?: string }>(
+          viewerToken
+        );
 
         const name = decodedToken?.name;
         const identity = decodedToken.sub;

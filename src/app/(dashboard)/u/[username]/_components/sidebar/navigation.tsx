@@ -14,7 +14,7 @@ export const Navigation = () => {
     return (
       <ul className="space-y-2">
         {[...Array(4)].map((_, i) => (
-          <NavItemSkeleton key={i}/>
+          <NavItemSkeleton key={i} />
         ))}
       </ul>
     );

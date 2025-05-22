@@ -13,19 +13,19 @@ export const VariantToggle = () => {
 
   const Icon = isChat ? Users : MessageSquare;
 
-  const label = isChat ? ChatVariant.COMMUNITY : ChatVariant.CHAT; 
+  const label = isChat ? ChatVariant.COMMUNITY : ChatVariant.CHAT;
 
   const onToggle = () => {
     const newVariant = isChat ? ChatVariant.COMMUNITY : ChatVariant.CHAT;
-    onChangeVariant(newVariant)
-  }
+    onChangeVariant(newVariant);
+  };
 
   return (
     <Hint label={`Switch to ${label}`} side="left" asChild>
       <Button
         onClick={onToggle}
         variant="ghost"
-        className="h-auto p-2 hover:bg-white/10 hover:text-primary bg-transparent"
+        className="hover:text-primary h-auto bg-transparent p-2 hover:bg-white/10"
       >
         <Icon className="h-4 w-4" />
       </Button>

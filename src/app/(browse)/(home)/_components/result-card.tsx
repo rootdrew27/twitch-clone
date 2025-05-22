@@ -30,11 +30,11 @@ export const ResultCard: FC<ResultCardProps> = (props) => {
             />
             <div className="flex flex-col truncate">
               <Hint label={props.data.name}>
-                <p className="text-sm overflow-hidden text-ellipsis">
+                <p className="overflow-hidden text-ellipsis text-sm">
                   {props.data.name}
                 </p>
               </Hint>
-              <p className="text-xs text-muted-foreground">
+              <p className="text-muted-foreground text-xs">
                 {props.data.username}
               </p>
             </div>
@@ -52,10 +52,10 @@ export const ResultCardSkeleton = () => {
       <div className="space-y-1 pt-1">
         <UserAvatarSkeleton />
         <div className="space-y-2">
-          <Skeleton className="h-4 w-32"/>
-          <Skeleton className="h-3 w-24"/>
+          <Skeleton className="h-4 w-32" />
+          <Skeleton className="h-3 w-24" />
         </div>
       </div>
     </div>
-  )
-}
+  );
+};

@@ -1,11 +1,11 @@
-"use server";
+'use server';
 
-import { v4 } from "uuid";
-import { AccessToken, VideoGrant } from "livekit-server-sdk";
+import { v4 } from 'uuid';
+import { AccessToken, VideoGrant } from 'livekit-server-sdk';
 
-import { getSelf } from "@/lib/auth-service";
-import { getUserByUsername } from "@/lib/user-service";
-import { isBlockedByUser } from "@/lib/block-service";
+import { getSelf } from '@/lib/auth-service';
+import { getUserByUsername } from '@/lib/user-service';
+import { isBlockedByUser } from '@/lib/block-service';
 
 export const createViewerToken = async (hostUsername: string) => {
   let self;
@@ -18,20 +18,20 @@ export const createViewerToken = async (hostUsername: string) => {
     self = { id, username };
   }
 
-  const host = await getUserByUsername(hostUsername)
+  const host = await getUserByUsername(hostUsername);
 
   if (!host) {
-    throw new Error("Streamer Not Found!");
+    throw new Error('Streamer Not Found!');
   }
 
   const isHost = self.id === host.id;
 
   if (!isHost) {
-    const isBlocked = await isBlockedByUser(host.id)
+    const isBlocked = await isBlockedByUser(host.id);
 
     if (isBlocked) {
-      throw new Error("User is blocked!");
-    }  
+      throw new Error('User is blocked!');
+    }
   }
 
   const token = new AccessToken(
@@ -39,19 +39,18 @@ export const createViewerToken = async (hostUsername: string) => {
     process.env.LIVEKIT_API_SECRET!,
     {
       identity: isHost ? `host-${self.id}` : `id-${self.id}`,
-      name: self.username
+      name: self.username,
     }
-  )
+  );
 
   const videoGrant: VideoGrant = {
     room: hostUsername,
     roomJoin: true,
     canPublish: false,
     canPublishData: true,
-  }
+  };
 
   token.addGrant(videoGrant);
 
-  return await token.toJwt()
-
-}
+  return await token.toJwt();
+};

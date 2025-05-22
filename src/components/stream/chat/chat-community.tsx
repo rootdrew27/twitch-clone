@@ -27,7 +27,6 @@ export const ChatCommunity: FC<ChatCommunityProps> = (props) => {
   };
 
   const filteredParticipants = useMemo(() => {
-
     return participants.filter((participant) => {
       if (participant.identity.includes('host')) {
         return false;
@@ -47,7 +46,7 @@ export const ChatCommunity: FC<ChatCommunityProps> = (props) => {
         className="border-white/10"
       />
       <ScrollArea className="mt-4 gap-y-2">
-        <p className="hidden p-2 text-center text-sm text-muted-foreground last:block">
+        <p className="text-muted-foreground hidden p-2 text-center text-sm last:block">
           No results.
         </p>
         {filteredParticipants.map((p) => (

@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import { useState, useTransition, useRef } from "react";
-import { AlertTriangle } from "lucide-react";
+import { useState, useTransition, useRef } from 'react';
+import { AlertTriangle } from 'lucide-react';
 
-import { IngressInput } from "livekit-server-sdk";
+import { IngressInput } from 'livekit-server-sdk';
 
-import { Button } from "@/components/ui/button";
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogClose,
@@ -13,25 +13,21 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
+} from '@/components/ui/dialog';
 
-import {
-  Alert,
-  AlertDescription,
-  AlertTitle
-} from "@/components/ui/alert";
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
-  SelectValue
-} from "@/components/ui/select";
+  SelectValue,
+} from '@/components/ui/select';
 
-import { toast } from "sonner";
+import { toast } from 'sonner';
 
-import { createIngress } from "@/actions/ingress";
+import { createIngress } from '@/actions/ingress';
 
 const RTMP = String(IngressInput.RTMP_INPUT);
 const WHIP = String(IngressInput.WHIP_INPUT);
@@ -46,20 +42,18 @@ export const ConnectModal = () => {
   const onSubmit = () => {
     startTransition(() => {
       createIngress(parseInt(ingressType))
-      .then(() => {
-        closeRef?.current?.click();
-        toast.success("Ingress Created.");
-      })
-      .catch(() => toast.error("Something went wrong!"))
-    })
-  }
+        .then(() => {
+          closeRef?.current?.click();
+          toast.success('Ingress Created.');
+        })
+        .catch(() => toast.error('Something went wrong!'));
+    });
+  };
 
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">
-          Generate Connection
-        </Button>
+        <Button variant="outline">Generate Connection</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -71,15 +65,15 @@ export const ConnectModal = () => {
           onValueChange={(value) => setIngressType(value)}
         >
           <SelectTrigger className="w-full">
-            <SelectValue placeholder="Ingress Type"/>
+            <SelectValue placeholder="Ingress Type" />
           </SelectTrigger>
           <SelectContent>
             <SelectItem value={RTMP}>RTMP</SelectItem>
             <SelectItem value={WHIP}>WHIP</SelectItem>
-          </SelectContent> 
+          </SelectContent>
         </Select>
         <Alert>
-          <AlertTriangle className="h-4 w-4"/>
+          <AlertTriangle className="h-4 w-4" />
           <AlertTitle>Warning!</AlertTitle>
           <AlertDescription>
             This action will reset all active streams using this connection.
@@ -87,20 +81,13 @@ export const ConnectModal = () => {
         </Alert>
         <div className="flex justify-between">
           <DialogClose ref={closeRef} asChild>
-            <Button
-              variant="outline"
-            >
-              Cancel
-            </Button>
+            <Button variant="outline">Cancel</Button>
           </DialogClose>
-          <Button
-            disabled={isPending}
-            onClick={onSubmit}
-          >
-              Generate
+          <Button disabled={isPending} onClick={onSubmit}>
+            Generate
           </Button>
         </div>
       </DialogContent>
     </Dialog>
-  )
-}
+  );
+};

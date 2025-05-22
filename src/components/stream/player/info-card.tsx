@@ -1,13 +1,13 @@
-"use client";
+'use client';
 
-import { FC } from "react";
+import { FC } from 'react';
 
-import Image from "next/image";
+import Image from 'next/image';
 
-import { Separator } from "radix-ui";
-import { Pencil, Image as ImageIcon } from "lucide-react";
-import { InfoModal } from "./info-modal";
-import { cn } from "@/lib/utils";
+import { Separator } from 'radix-ui';
+import { Pencil, Image as ImageIcon } from 'lucide-react';
+import { InfoModal } from './info-modal';
+import { cn } from '@/lib/utils';
 
 interface InfoCardsProps {
   streamName: string;
@@ -22,9 +22,14 @@ export const InfoCard: FC<InfoCardsProps> = (props) => {
   return (
     <div className="px-4 py-4">
       <div className="rounded-xl border">
-        <div className={cn("flex items-center gap-x-2.5 p-4", isHost ? "" : "hidden")}>
-          <div className="rounded-md p-2 h-auto w-auto">
-            <Pencil className="h-5 w-5"/>
+        <div
+          className={cn(
+            'flex items-center gap-x-2.5 p-4',
+            isHost ? '' : 'hidden'
+          )}
+        >
+          <div className="h-auto w-auto rounded-md p-2">
+            <Pencil className="h-5 w-5" />
           </div>
           <div>
             <h2 className="text-sm font-semibold capitalize">
@@ -36,17 +41,11 @@ export const InfoCard: FC<InfoCardsProps> = (props) => {
             initialThumbnailUrl={props.thumbnailUrl}
           />
         </div>
-        <Separator.Root className="data-[orientation=horizontal]:h-px data-[orientation=horizontal]:w-11/12 data-[orientation=horizontal]:mx-auto bg-white/10" />
-        <div className="p-4 lg:p-6 space-y-4">
-          <h3 className="text-sm text-muted-foreground mb-2">
-            Name
-          </h3>
-          <p className="text-sm font-semibold">
-            {props.streamName}
-          </p>
-          <h3 className="text-sm text-muted-foreground mb-2">
-            Thumbnail
-          </h3>
+        <Separator.Root className="bg-white/10 data-[orientation=horizontal]:mx-auto data-[orientation=horizontal]:h-px data-[orientation=horizontal]:w-11/12" />
+        <div className="space-y-4 p-4 lg:p-6">
+          <h3 className="text-muted-foreground mb-2 text-sm">Name</h3>
+          <p className="text-sm font-semibold">{props.streamName}</p>
+          <h3 className="text-muted-foreground mb-2 text-sm">Thumbnail</h3>
           {/* Disabled to avoid incurring AWS costs during development.
           TODO: Enable for production. */}
           {/* <div className="relative aspect-video rounded-md overflow-hidden w-[200px] border border-white/10">
@@ -57,11 +56,11 @@ export const InfoCard: FC<InfoCardsProps> = (props) => {
               
             />
             </div> */}
-            <div>
-              <ImageIcon />
-            </div>
+          <div>
+            <ImageIcon />
+          </div>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};

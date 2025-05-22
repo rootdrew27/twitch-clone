@@ -4,15 +4,19 @@ import { useMediaQuery } from 'usehooks-ts';
 
 import { useChatSidebar, ChatVariant } from '@/store/use-chat-sidebar';
 
-import { ConnectionState, ParticipantKind } from 'livekit-client';
 import {
-  ReceivedChatMessage,
+  ConnectionState,
+  ParticipantKind,
+  RemoteParticipant,
+  RoomEvent,
+} from 'livekit-client';
+import {
   useRoomContext,
   useChat,
   useConnectionState,
   useRemoteParticipant,
 } from '@livekit/components-react';
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { ChatHeader, ChatHeaderSkeleton } from './chat-header';
 import { ChatList, ChatListSkeleton } from './chat-list';
@@ -61,11 +65,22 @@ export const Chat = ({
   const { chatMessages: lkMessages, send } = useChat();
   const room = useRoomContext();
 
-  room.on('participantDisconnected', (p) => {
-    if (p.identity === host?.identity) {
-      setMessages([]);
-    }
-  });
+  useEffect(() => {
+    const participantDisconnectlistener = (p: RemoteParticipant) => {
+      if (p.identity === host?.identity) {
+        setMessages([]);
+      }
+    };
+
+    room.on(RoomEvent.ParticipantDisconnected, participantDisconnectlistener);
+
+    return () => {
+      room.off(
+        RoomEvent.ParticipantDisconnected,
+        participantDisconnectlistener
+      );
+    };
+  }, [host?.identity, room]);
 
   useEffect(() => {
     if (matches) {
@@ -76,8 +91,6 @@ export const Chat = ({
   const onSubmit = async () => {
     if (!send) return;
 
-    // const newMessage = {timestamp: new Date(), from: viewerName, message: value };
-    // setMessages([...messages, newMessage]);
     const newMessage = await send(value);
     setValue('');
     await storeChat(hostName, {
@@ -85,43 +98,28 @@ export const Chat = ({
       message: newMessage.message,
       fromName: newMessage.from.name,
     });
-    // setMessages(messages.concat({ timestamp: newMessage.timestamp, message: newMessage.message, fromName: newMessage.from.name }))
   };
 
   const onChange = (value: string) => {
     setValue(value);
   };
 
-  // room.on('chatMessage', (newMessage, participant) => {
-  //   console.log("Chat message event fired!")
-  //   setMessages(
-  //       [
-  //         {
-  //           timestamp: newMessage.timestamp,
-  //           message: newMessage.message,
-  //           fromName: participant?.name || "Guest"
-  //         },
-  //       ].concat(messages)
-  //     );
-  // });
-
   useEffect(() => {
     if (lkMessages.length > 0) {
       const newMessage = lkMessages[lkMessages.length - 1];
-      setMessages(m =>
-        [
-          {
-            timestamp: newMessage.timestamp,
-            message: newMessage.message,
-            fromName: newMessage.from.name,
-          },
-        ].concat(m)
-      );
+      setMessages((messages) => [
+        {
+          timestamp: newMessage.timestamp,
+          message: newMessage.message,
+          fromName: newMessage.from.name,
+        },
+        ...messages,
+      ]);
     }
   }, [lkMessages]);
 
   return (
-    <div className="flex w-full flex-col border-l-0 bg-background lg:border-l">
+    <div className="bg-background flex w-full flex-col border-l-0 lg:border-l">
       <ChatHeader />
       {variant === ChatVariant.CHAT && (
         <>
@@ -139,7 +137,7 @@ export const Chat = ({
           )}
         </>
       )}
-      {variant === ChatVariant.COMMUNITY &&  (
+      {variant === ChatVariant.COMMUNITY && (
         <ChatCommunity
           hostName={hostName}
           viewerName={viewerName}

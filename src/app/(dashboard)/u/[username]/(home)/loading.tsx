@@ -1,5 +1,5 @@
-import { StreamPlayerSkeleton } from "@/components/stream/player"
-import { HeaderSkeleton } from "@/components/stream/player/header";
+import { StreamPlayerSkeleton } from '@/components/stream/player';
+import { HeaderSkeleton } from '@/components/stream/player/header';
 
 const CreatorLoading = () => {
   return (
@@ -7,7 +7,7 @@ const CreatorLoading = () => {
       <StreamPlayerSkeleton />
       <HeaderSkeleton />
     </div>
-  )
-}
+  );
+};
 
 export default CreatorLoading;

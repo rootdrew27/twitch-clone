@@ -1,43 +1,48 @@
-"use client";
+'use client';
 
-import { Hint } from "@/components/hint";
+import { Hint } from '@/components/hint';
 
-import { ArrowLeftFromLine, ArrowRightFromLine } from "lucide-react";
+import { ArrowLeftFromLine, ArrowRightFromLine } from 'lucide-react';
 
-import { useSidebar } from "@/store/use-sidebar"
-import { Button } from "@/components/ui/button"
-import { useEffect } from "react";
-import { useMediaQuery } from "usehooks-ts";
+import { useSidebar } from '@/store/use-sidebar';
+import { Button } from '@/components/ui/button';
 
 const Toggle = () => {
-    const matches = useMediaQuery('(max-width: 768px)');
-    const { collapsed, onExpand, onCollapse } = useSidebar((state) => state)
+  const { collapsed, onExpand, onCollapse } = useSidebar((state) => state);
 
-    const label = collapsed ? "Expand" : "Collapse";
+  const label = collapsed ? 'Expand' : 'Collapse';
 
-    return (
-        <>
-            {collapsed && (
-                <div className="hidden md:flex w-full items-center justify-center pt-4 mb-4">
-                    <Hint label={label} side="right" asChild>
-                        <Button variant="outline" onClick={onExpand} className="h-auto p-2 text-muted-foreground hover:text-primary">
-                            <ArrowRightFromLine className="h-4 w-4" />
-                        </Button>
-                    </Hint>
-                </div>
-            )}
-            {!collapsed && (
-                <div className="p-3 pl-6 mb-2 flex items-center w-full">
-                    <p className="font-bold">For You</p>
-                    <Hint label={label} side="right" asChild>
-                        <Button variant="outline" onClick={onCollapse} className="h-auto p-2 ml-auto text-muted-foreground hover:text-primary">
-                            <ArrowLeftFromLine className="h-4 w-4" />
-                        </Button>
-                    </Hint>
-                </div>
-            )}
-        </>
-    )
-}
+  return (
+    <>
+      {collapsed && (
+        <div className="mb-4 hidden w-full items-center justify-center pt-4 md:flex">
+          <Hint label={label} side="right" asChild>
+            <Button
+              variant="outline"
+              onClick={onExpand}
+              className="text-muted-foreground hover:text-primary h-auto p-2"
+            >
+              <ArrowRightFromLine className="h-4 w-4" />
+            </Button>
+          </Hint>
+        </div>
+      )}
+      {!collapsed && (
+        <div className="mb-2 flex w-full items-center p-3 pl-6">
+          <p className="font-bold">For You</p>
+          <Hint label={label} side="right" asChild>
+            <Button
+              variant="outline"
+              onClick={onCollapse}
+              className="text-muted-foreground hover:text-primary ml-auto h-auto p-2"
+            >
+              <ArrowLeftFromLine className="h-4 w-4" />
+            </Button>
+          </Hint>
+        </div>
+      )}
+    </>
+  );
+};
 
 export { Toggle };

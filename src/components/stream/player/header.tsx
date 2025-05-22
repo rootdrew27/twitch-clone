@@ -8,7 +8,7 @@ import {
   useRemoteParticipant,
 } from '@livekit/components-react';
 
-import { ParticipantKind } from 'livekit-client'; 
+import { ParticipantKind } from 'livekit-client';
 
 import { UserAvatar, UserAvatarSkeleton } from '@/components/user-avatar';
 import { VerifiedMark } from '@/components/verified-mark';
@@ -26,7 +26,10 @@ interface HeaderProps {
 
 export const Header: FC<HeaderProps> = (props) => {
   const participants = useParticipants();
-  const host = useRemoteParticipant({kind: ParticipantKind.INGRESS, identity:`id-${props.hostIdentity}`});
+  const host = useRemoteParticipant({
+    kind: ParticipantKind.INGRESS,
+    identity: `id-${props.hostIdentity}`,
+  });
 
   const viewerCount = participants.length - 1;
   const isLive = !!host;
@@ -57,7 +60,7 @@ export const Header: FC<HeaderProps> = (props) => {
               </p>
             </div>
           ) : (
-            <p className="text-xs font-semibold text-muted-foreground">
+            <p className="text-muted-foreground text-xs font-semibold">
               Offline
             </p>
           )}

@@ -16,7 +16,7 @@ import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { Separator } from 'radix-ui';
 import { updateStream } from '@/actions/stream';
-import { updateThumbnail } from "@/actions/s3/thumbnail";
+import { updateThumbnail } from '@/actions/s3/thumbnail';
 import { toast } from 'sonner';
 // import { Hint } from '@/components/hint';
 
@@ -35,16 +35,18 @@ export const InfoModal: FC<InfoModalProps> = (props) => {
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formElements = e.currentTarget.elements;
-    const thumbnailEle = formElements.namedItem("thumbnail") as HTMLInputElement
+    const thumbnailEle = formElements.namedItem(
+      'thumbnail'
+    ) as HTMLInputElement;
     if (thumbnailEle.files?.length === 1) {
       updateThumbnail(thumbnailEle.files[0])
-        .then(() => toast.success("Thumbnail updated."))
-        .catch(() => toast.error("Unable to update Thumbnail."))
+        .then(() => toast.success('Thumbnail updated.'))
+        .catch(() => toast.error('Unable to update Thumbnail.'));
     }
     startTransition(() => {
       updateStream({ field: 'name', value: name })
-        .then(() => toast.success("Stream Name updated."))
-        .catch(() => toast.error("Unable to update Stream Name."))
+        .then(() => toast.success('Stream Name updated.'))
+        .catch(() => toast.error('Unable to update Stream Name.'));
     });
   };
 
@@ -64,12 +66,12 @@ export const InfoModal: FC<InfoModalProps> = (props) => {
           <DialogTitle>Edit Stream Info</DialogTitle>
         </DialogHeader>
         <Separator.Root className="bg-white/10 data-[orientation=horizontal]:mx-auto data-[orientation=horizontal]:h-px data-[orientation=horizontal]:w-full" />
-        <form 
+        <form
           encType="multipart/form-data"
-          onSubmit={onSubmit} 
+          onSubmit={onSubmit}
           className="space-y-5"
         >
-          <div className="pb-8 space-y-5">
+          <div className="space-y-5 pb-8">
             <div className="space-y-2">
               <Label className="pb-1 pl-1">Name</Label>
               <Input
@@ -82,7 +84,7 @@ export const InfoModal: FC<InfoModalProps> = (props) => {
             </div>
             <div className="space-y-2">
               <Label className="pb-1 pl-1">Thumbnail</Label>
-              <Input 
+              <Input
                 type="file"
                 name="thumbnail"
                 className="hover:cursor-pointer"

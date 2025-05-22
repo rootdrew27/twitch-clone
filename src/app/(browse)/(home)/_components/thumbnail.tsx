@@ -16,14 +16,14 @@ export const Thumbnail: FC<ThumbnailProps> = (props) => {
 
   if (!src) {
     content = (
-      <div className="flex h-full w-full flex-col items-center justify-center gap-y-4 rounded-md bg-gray-800 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1 z-50">
-        <Suspense fallback={<div className="bg-white/10 rounded-xl"></div>}>
+      <div className="z-50 flex h-full w-full flex-col items-center justify-center gap-y-4 rounded-md bg-gray-800 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1">
+        <Suspense fallback={<div className="rounded-xl bg-white/10"></div>}>
           <UserAvatar
             size="md"
             showBadge
             username={username}
             imageUrl={fallback}
-            />
+          />
         </Suspense>
       </div>
     );
@@ -33,22 +33,23 @@ export const Thumbnail: FC<ThumbnailProps> = (props) => {
         src={src}
         fill
         alt="Thumbnail"
-        className="object-cover transition-transform group-hover:translate-x-2 group-hover:translate-y-2 rounded-md"
+        className="rounded-md object-cover transition-transform group-hover:translate-x-2 group-hover:translate-y-2"
       />
-    )
+    );
   }
 
   return (
     <div className="group relative aspect-video cursor-pointer rounded-md">
-      <div className="absolute inset-0 rounded-md bg-primary opacity-0 group-hover:opacity-90 z-0"/>{content}
+      <div className="bg-primary absolute inset-0 z-0 rounded-md opacity-0 group-hover:opacity-90" />
+      {content}
     </div>
   );
 };
 
 export const ThumbnailSkeleton = () => {
   return (
-    <div className="group aspect-video relative rounded-xl cursor-pointer">
+    <div className="group relative aspect-video cursor-pointer rounded-xl">
       <Skeleton className="h-full w-full" />
     </div>
-  )
-}
+  );
+};

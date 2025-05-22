@@ -1,34 +1,33 @@
-"use client";
+'use client';
 
-import { FC } from "react";
+import { FC } from 'react';
 
-import { format } from "date-fns";
+import { format } from 'date-fns';
 
-import { stringToColor } from "@/lib/utils";
-import { ReceivedChatMessageModel } from "@/models/mongo";
+import { stringToColor } from '@/lib/utils';
+import { ReceivedChatMessageModel } from '@/models/mongo';
 
 interface ChatMessageProps {
-  data: ReceivedChatMessageModel
+  data: ReceivedChatMessageModel;
 }
 
 export const ChatMessage: FC<ChatMessageProps> = (props) => {
-  const color = stringToColor(props.data.fromName || "");
+  const color = stringToColor(props.data.fromName || '');
 
   return (
-    <div className="flex gap-2 p-2 rounded-md hover:bg-white/5">
-      <p className="text-sm text-white/40 hidden">
-        {format(props.data.timestamp, "HH: MM")}
+    <div className="flex gap-2 rounded-md p-2 hover:bg-white/5">
+      <p className="hidden text-sm text-white/40">
+        {format(props.data.timestamp, 'HH: MM')}
       </p>
-      <div className="flex flex-wrap items-baseline gap-1 grow">
-        <p className="text-sm font-semibold whitespace-nowrap">
+      <div className="flex grow flex-wrap items-baseline gap-1">
+        <p className="whitespace-nowrap text-sm font-semibold">
           <span className="truncate" style={{ color: color }}>
             {props.data.fromName}
-          </span>:
+          </span>
+          :
         </p>
-        <p className="text-sm">
-          {props.data.message}
-        </p>
+        <p className="text-sm">{props.data.message}</p>
       </div>
     </div>
-  )
-}
+  );
+};

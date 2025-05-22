@@ -72,7 +72,6 @@ export const blockUser = async (id: string) => {
     // });
 
     return true;
-
   } catch (err) {
     console.log(err);
     throw new Error('Internal Error');
@@ -100,15 +99,12 @@ export const unblockUser = async (id: string) => {
     );
 
     return true;
-
   } catch (err) {
-    console.log(err)
-    throw new Error("Internal Error!")
+    console.log(err);
+    throw new Error('Internal Error!');
   } finally {
     await db.end();
   }
 
   // })
-
-
 };

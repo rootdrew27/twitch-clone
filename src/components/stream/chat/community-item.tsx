@@ -36,8 +36,8 @@ export const CommunityItem: FC<CommunityItemProps> = (props) => {
   return (
     <div
       className={cn(
-        'flex items-center justify-between w-full p-2 rounded-md text-sm hover:bg-white/3',
-        isPending && 'opacity-50 pointer-events-none'
+        'hover:bg-white/3 flex w-full items-center justify-between rounded-md p-2 text-sm',
+        isPending && 'pointer-events-none opacity-50'
       )}
     >
       <p style={{ color: color }}>{props.participantName}</p>
@@ -47,9 +47,9 @@ export const CommunityItem: FC<CommunityItemProps> = (props) => {
             disabled={isPending}
             variant="ghost"
             onClick={handleBlock}
-            className="h-auto w-auto opacity-0 group-hover:opacity-100 text-white hover:bg-gray-300 transition"
+            className="h-auto w-auto text-white opacity-0 transition hover:bg-gray-300 group-hover:opacity-100"
           >
-            <MinusCircle className="h-4 w-4"/>
+            <MinusCircle className="h-4 w-4" />
           </Button>
         </Hint>
       )}

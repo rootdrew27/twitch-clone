@@ -19,7 +19,7 @@ export const AboutCard: FC<AboutCardProps> = (props) => {
 
   return (
     <div className="px-4 py-4">
-      <div className="flex flex-col gap-y-4 rounded-xl border bg-background p-4">
+      <div className="bg-background flex flex-col gap-y-4 rounded-xl border p-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-x-2 text-lg font-semibold lg:text-2xl">
             About - {props.hostName}
@@ -27,9 +27,9 @@ export const AboutCard: FC<AboutCardProps> = (props) => {
           </div>
           {isHost && <BioModal initialValue={props.bio} />}
         </div>
-        <Separator.Root className="data-[orientation=horizontal]:h-px data-[orientation=horizontal]:w-full data-[orientation=horizontal]:mx-auto bg-white/10" />
-        <div className="text-sm text-muted-foreground">
-          <span className="font-semibold text-primary">
+        <Separator.Root className="bg-white/10 data-[orientation=horizontal]:mx-auto data-[orientation=horizontal]:h-px data-[orientation=horizontal]:w-full" />
+        <div className="text-muted-foreground text-sm">
+          <span className="text-primary font-semibold">
             {props.followedByCount}{' '}
           </span>{' '}
           {followedByLabel}

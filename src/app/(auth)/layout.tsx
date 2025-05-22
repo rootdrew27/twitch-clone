@@ -1,14 +1,12 @@
-import { Logo } from "@/app/_components/logo";
+import { Logo } from '@/app/_components/logo';
 
-const AuthLayout = ({ children }: {
-    children: React.ReactNode
-}) => {
-    return (
-        <div className="h-full flex flex-col items-center justify-center space-y-6">
-            <Logo />
-            {children}
-        </div>
-    )
-}
+const AuthLayout = ({ children }: { children: React.ReactNode }) => {
+  return (
+    <div className="flex h-full flex-col items-center justify-center space-y-6">
+      <Logo />
+      {children}
+    </div>
+  );
+};
 
 export default AuthLayout;

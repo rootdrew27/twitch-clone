@@ -1,16 +1,16 @@
-"use client";
+'use client';
 
-import qs from "query-string";
-import { useState } from "react";
-import { Search as SearchIcon, X } from "lucide-react";
-import { useRouter } from "next/navigation";
+import qs from 'query-string';
+import { useState } from 'react';
+import { Search as SearchIcon, X } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
 
 export const Search = () => {
   const router = useRouter();
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState('');
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // page will not refresh by default
@@ -21,7 +21,7 @@ export const Search = () => {
 
     const url = qs.stringifyUrl(
       {
-        url: "/search",
+        url: '/search',
         query: { term: value },
       },
       { skipEmptyString: true }
@@ -32,23 +32,26 @@ export const Search = () => {
   };
 
   const onClear = () => {
-    setValue("");
+    setValue('');
   };
 
   return (
     <form
       action=""
       onSubmit={onSubmit}
-      className="relative w-full lg:w-[400px] flex items-center"
+      className="relative flex w-full items-center lg:w-[400px]"
     >
       <Input
         value={value}
         placeholder="Search"
         onChange={(e) => setValue(e.target.value)}
-        className="rounded-r-none focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0 h-8"
+        className="h-8 rounded-r-none focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0"
       />
       {value && (
-        <X className="absolute top-1.5 right-13 h-5 w-5 text-muted-foreground cursor-pointer hover:opacity-75 transition" onClick={onClear}/>
+        <X
+          className="right-13 text-muted-foreground absolute top-1.5 h-5 w-5 cursor-pointer transition hover:opacity-75"
+          onClick={onClear}
+        />
       )}
       <Button
         type="submit"
@@ -56,7 +59,7 @@ export const Search = () => {
         variant="outline"
         className="rounded-l-none"
       >
-        <SearchIcon className="h-5 w-5 text-muted-foreground" />
+        <SearchIcon className="text-muted-foreground h-5 w-5" />
       </Button>
     </form>
   );

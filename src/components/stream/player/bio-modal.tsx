@@ -1,6 +1,12 @@
-"use client";
+'use client';
 
-import { ChangeEvent, ChangeEventHandler, FC, useState, useTransition } from "react";
+import {
+  ChangeEvent,
+  ChangeEventHandler,
+  FC,
+  useState,
+  useTransition,
+} from 'react';
 import {
   Dialog,
   DialogClose,
@@ -9,39 +15,35 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { Button } from "@/components/ui/button";
-import { updateUser } from "@/actions/user";
-import { toast } from "sonner";
+import { Button } from '@/components/ui/button';
+import { updateUser } from '@/actions/user';
+import { toast } from 'sonner';
 
 interface BioModalProps {
   initialValue: string | null;
 }
 
-export const BioModal:FC<BioModalProps> = (props) => {
-  const [value, setValue] = useState("");
+export const BioModal: FC<BioModalProps> = (props) => {
+  const [value, setValue] = useState('');
   const [isPending, startTransition] = useTransition();
 
-  const onSubmit = (e:React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     startTransition(() => {
       updateUser({ bio: value })
-      .then(() => toast.success("User bio updated."))
-      .catch(() => toast.error("Something went wrong!"));
-    })
-  }
+        .then(() => toast.success('User bio updated.'))
+        .catch(() => toast.error('Something went wrong!'));
+    });
+  };
 
-  const onTextAreaChange = (e:ChangeEvent<HTMLTextAreaElement>) => {
-    setValue(e.target.value)
-  }
+  const onTextAreaChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    setValue(e.target.value);
+  };
 
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button
-          variant="link"
-          size="sm"
-          className="ml-auto"
-        >
+        <Button variant="link" size="sm" className="ml-auto">
           Edit
         </Button>
       </DialogTrigger>
@@ -50,28 +52,21 @@ export const BioModal:FC<BioModalProps> = (props) => {
           <DialogTitle>Edit User Bio</DialogTitle>
         </DialogHeader>
         <form onSubmit={onSubmit} className="space-y-4">
-          <textarea 
+          <textarea
             placeholder="Something about you..."
             onChange={onTextAreaChange}
             value={value}
             disabled={isPending}
-            className="resize-none w-full border border-white/10 p-2 rounded-md"
+            className="w-full resize-none rounded-md border border-white/10 p-2"
           />
-          <div className="flex justify-between items-center">
+          <div className="flex items-center justify-between">
             <DialogClose asChild>
-              <Button
-                type="button"
-                variant="outline"
-                disabled={isPending}
-              >
+              <Button type="button" variant="outline" disabled={isPending}>
                 Cancel
               </Button>
             </DialogClose>
             <DialogClose asChild>
-              <Button
-                type="submit"
-                disabled={isPending}
-              >
+              <Button type="submit" disabled={isPending}>
                 Submit
               </Button>
             </DialogClose>
@@ -79,5 +74,5 @@ export const BioModal:FC<BioModalProps> = (props) => {
         </form>
       </DialogContent>
     </Dialog>
-  )
-}
+  );
+};
